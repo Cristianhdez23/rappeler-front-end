@@ -24,7 +24,7 @@ const filterBar = props => {
           />
         </div>
         <div className="advanced__filter-bar__buttons-block__add-appointment-button">
-          <button className="advanced__filter-bar__buttons-block__add-appointment-button--btn">
+          <button className="advanced__filter-bar__buttons-block__add-appointment-button--btn" title="Add Appointment">
             <span className="fas fa-plus-circle" />
             Add Appointment
           </button>

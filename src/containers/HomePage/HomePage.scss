@@ -1,0 +1,96 @@
+$font-color: #ffffff;
+$border-color: #f0f3f3;
+$upcoming-text-color: #595959;
+
+.homePage {
+  display: flex;
+  margin-bottom: 75px;
+}
+
+.detail-container {
+  width: 100%;
+
+  &__appointments {
+    margin-top: -110px;
+
+    &__today-block {
+      border-bottom: 1.5px solid #f0f3f3;
+      padding-bottom: 20px;
+      margin: 0 30px;
+
+      &__information {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &--today-title {
+          margin: 0;
+          color: $font-color;
+          font-size: 22px;
+        }
+
+        &--meeting-time {
+          margin: 0;
+          color: $font-color;
+          font-weight: 400;
+          font-style: italic;
+          font-size: 13px;
+        }
+      }
+    }
+
+    &__upcoming-block {
+      border-bottom: 1.5px solid #f0f3f3;
+      padding-bottom: 20px;
+      margin: 50px 30px 0 30px;
+
+      &--today-title {
+        margin: 0;
+        color: $upcoming-text-color;
+        font-size: 22px;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .detail-container {
+    &__appointments {
+      margin-top: -90px;
+
+      &__today-block {
+        margin: 0 50px;
+
+        &__information {
+          &--today-title {
+            font-size: 25px;
+          }
+
+          &--meeting-time {
+            font-size: 15px;
+          }
+        }
+      }
+
+      &__upcoming-block {
+        margin: 50px 50px 0 50px;
+
+        &--today-title {
+          font-size: 25px;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 960px) {
+  .detail-container {
+    width: 70%;
+  }
+}
+
+@media (min-width: 1240px) {
+  .detail-container {
+    width: 70%;
+  }
+}
