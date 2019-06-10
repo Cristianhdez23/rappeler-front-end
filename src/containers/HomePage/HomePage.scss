@@ -1,10 +1,17 @@
 $font-color: #ffffff;
 $border-color: #f0f3f3;
 $upcoming-text-color: #595959;
+$background-color: #000034;
 
 .homePage {
   display: flex;
   margin-bottom: 75px;
+}
+
+.month-information-mobile {
+  margin-top: 75px;
+  padding-bottom: 20px;
+  background-color: $background-color;
 }
 
 .detail-container {
@@ -53,6 +60,40 @@ $upcoming-text-color: #595959;
   }
 }
 
+.aside-container {
+  display: none;
+}
+
+.mobile-menu {
+  background-color: #5acea091;
+  position: fixed;
+  right: 0;
+  top: 80px;
+  border-top-left-radius: 80px;
+  border-bottom-left-radius: 80px;
+  width: 30px;
+  height: 50px;
+  z-index: 10;
+  box-shadow: 0 0 10px 0 #5ace9f;
+
+  &--btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    height: inherit;
+    width: inherit;
+
+    .fa-bars {
+      font-size: 27px;
+      color: #000034;
+      position: absolute;
+      top: 50%;
+      left: 75%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
 @media (min-width: 768px) {
   .detail-container {
     &__appointments {
@@ -81,16 +122,41 @@ $upcoming-text-color: #595959;
       }
     }
   }
-}
 
-@media (min-width: 960px) {
-  .detail-container {
-    width: 70%;
+  .mobile-menu {
+    top: 85px;
+  }
+
+  .month-information-mobile {
+    margin-top: 82px;
+    padding-top: 20px;
   }
 }
 
-@media (min-width: 1240px) {
+@media (min-width: 960px) {
+  .month-information-mobile {
+    display: none;
+  }
+
   .detail-container {
     width: 70%;
+  }
+
+  .mobile-menu {
+    display: none;
+  }
+
+  .aside-container {
+    width: 30%;
+    display: flex;
+    flex-flow: column;
+
+    &__month-information {
+      position: fixed;
+      width: 30%;
+      box-sizing: border-box;
+      background-color: $background-color;
+      margin-top: 82px;
+    }
   }
 }

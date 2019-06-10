@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
+
 import "./Layout.scss";
+
 class Layout extends Component {
   state = {};
   render() {
