@@ -2,15 +2,19 @@ import React, { Component } from "react";
 
 import FilterBar from "../../components/FilterBar/FilterBar";
 import AppointmentCard from "../../components/AppointmentCard/AppointmentCard";
+// import SideDrawer from "../../components/MonthsInformation/SideDrawer/SideDrawer";
 
 import "./HomePage.scss";
+import MonthsInformation from "../../components/MonthsInformation/MonthsInformation";
 
 class HomePage extends Component {
   state = {
     allButtonClicked: true,
     confirmedButtonClicked: false,
     pendingButtonClicked: false,
-    cancelledButtonClicked: false
+    cancelledButtonClicked: false,
+
+    showSideDrawer: false
   };
 
   componentDidUpdate() {
@@ -23,6 +27,16 @@ class HomePage extends Component {
       this.setState({ allButtonClicked: true });
     }
   }
+
+  sideDrawerCloseHandler = () => {
+    this.setState({ showSideDrawer: false });
+  };
+
+  sideDrawerOpenHandler = () => {
+    this.setState(prevState => {
+      return { showSideDrawer: !prevState.showSideDrawer };
+    });
+  };
 
   allButtonClickedHandler = event => {
     if (this.state.confirmedButtonClicked) {
@@ -69,7 +83,14 @@ class HomePage extends Component {
   render() {
     return (
       <main className="homePage">
+        {/* <SideDrawer
+          open={this.state.showSideDrawer}
+          closed={this.sideDrawerCloseHandler}
+        /> */}
         <section className="detail-container">
+          <section className="month-information-mobile">
+            <MonthsInformation />
+          </section>
           <FilterBar
             onClickAllButton={this.allButtonClickedHandler}
             onClickConfirmedButton={this.confirmedButtonClickedHandler}
@@ -106,8 +127,23 @@ class HomePage extends Component {
               <AppointmentCard status="cancelled" />
             </section>
           </section>
+          {/* <div className="mobile-menu">
+            <button
+              className="mobile-menu--btn"
+              title="Months Information"
+              aria-label="Months Information"
+              onClick={this.sideDrawerOpenHandler}
+            >
+              <span className="fas fa-bars" alt="as" />
+            </button>
+          </div> */}
         </section>
-        {/* <aside className="aside-container">a</aside> */}
+
+        <aside className="aside-container">
+          <section className="aside-container__month-information">
+            <MonthsInformation />
+          </section>
+        </aside>
       </main>
     );
   }
