@@ -24,7 +24,7 @@ $cancelled-color: #f16873;
 
     &--appointment-time {
       margin: 0;
-      color: #595959;
+      color: #282943;
       font-size: 15px;
       width: 50%;
       text-align: center;
@@ -69,7 +69,7 @@ $cancelled-color: #f16873;
 
       &--name {
         margin: 0;
-        color: #595959;
+        color: #282943;
       }
 
       &--location {
@@ -93,7 +93,7 @@ $cancelled-color: #f16873;
     &--date {
       margin: 0;
       width: 50%;
-      color: #595959;
+      color: #494949;
     }
 
     &--status {
@@ -123,14 +123,15 @@ $cancelled-color: #f16873;
         cursor: pointer;
         color: #bcbcbc;
         font-size: 18px;
+        z-index: 30;
       }
 
-      &--btn:hover {
-        color: #595959;
+      &--btn:hover, &--btn:focus {
+        color: #282943;
       }
 
       &--btn:active {
-        background-color: #59595936;
+        background-color: #28294346;
         outline: none;
       }
 
@@ -143,8 +144,16 @@ $cancelled-color: #f16873;
   }
 }
 
-.appointment-card__container:hover {
-  // background-color: #8d8d8d1a;
+.appointment-card__container:hover,
+.appointment-card__container:focus {
+  background-color: #f5f5f5;
+  box-shadow: -1px 15px 8px -1px #b1bbbe;
+  outline: none;
+}
+
+.appointment-card__container:active {
+  background-color: #eeeeee;
+  outline: none;
 }
 
 .border-left-confirmed {

@@ -2,10 +2,11 @@ import React, { Component } from "react";
 
 import FilterBar from "../../components/FilterBar/FilterBar";
 import AppointmentCard from "../../components/AppointmentCard/AppointmentCard";
-// import SideDrawer from "../../components/MonthsInformation/SideDrawer/SideDrawer";
+import SideDrawer from "../../components/UI/SideDrawer/SideDrawer";
 
 import "./HomePage.scss";
 import MonthsInformation from "../../components/MonthsInformation/MonthsInformation";
+import AppointmentDetails from "../../components/AppointmentDetails/AppointmentDetails";
 
 class HomePage extends Component {
   state = {
@@ -14,7 +15,11 @@ class HomePage extends Component {
     pendingButtonClicked: false,
     cancelledButtonClicked: false,
 
-    showSideDrawer: false
+    showSideDrawer: false,
+
+    openAppointmentDetails: false,
+    instanceForAppointmentDetails: null,
+    editableContentAppointmentDetails: false
   };
 
   componentDidUpdate() {
@@ -38,6 +43,7 @@ class HomePage extends Component {
     });
   };
 
+  // Filter Buttons
   allButtonClickedHandler = event => {
     if (this.state.confirmedButtonClicked) {
       this.setState({ confirmedButtonClicked: false });
@@ -79,14 +85,42 @@ class HomePage extends Component {
     });
     event.target.blur();
   };
+  // End Filter Buttons
+
+  // onClickEvents Handlers
+
+  onClickOpenCardHandler = instanceAppointment => {
+    this.setState({ instanceForAppointmentDetails: instanceAppointment });
+    this.setState({ openAppointmentDetails: true });
+    this.setState({ editableContentAppointmentDetails: false });
+  };
+
+  onClickCloseCardHandler = instanceAppointment => {
+    this.setState({ instanceForAppointmentDetails: null });
+    this.setState({ openAppointmentDetails: false });
+  };
+
+  onClickOpenEditCardHandler = (e, instanceAppointment) => {
+    e.stopPropagation();
+    this.setState({ instanceForAppointmentDetails: instanceAppointment });
+    this.setState({ openAppointmentDetails: true });
+    this.setState({ editableContentAppointmentDetails: true });
+  };
 
   render() {
     return (
       <main className="homePage">
-        {/* <SideDrawer
-          open={this.state.showSideDrawer}
-          closed={this.sideDrawerCloseHandler}
-        /> */}
+        <SideDrawer
+          open={this.state.openAppointmentDetails}
+          closed={this.onClickCloseCardHandler}
+        >
+          <AppointmentDetails
+            appointment={this.state.instanceForAppointmentDetails}
+            open={this.state.openAppointmentDetails}
+            onClickCloseDetails={this.onClickCloseCardHandler}
+            isEditable={this.state.editableContentAppointmentDetails}
+          />
+        </SideDrawer>
         <section className="detail-container">
           <section className="month-information-mobile">
             <MonthsInformation />
@@ -111,37 +145,41 @@ class HomePage extends Component {
                   Meeting in 19 minutes
                 </h5>
               </div>
-              <AppointmentCard status="confirmed" />
-              <AppointmentCard status="pending" />
-              <AppointmentCard status="cancelled" />
+              <AppointmentCard
+                onClickCard={this.onClickOpenCardHandler}
+                status="confirmed"
+                onClickEditCard={this.onClickOpenEditCardHandler}
+              />
             </section>
             <section className="detail-container__appointments__upcoming-block">
               <h2 className="detail-container__appointments__upcoming-block--today-title">
                 Upcoming
               </h2>
-              <AppointmentCard status="confirmed" />
-              <AppointmentCard status="pending" />
-              <AppointmentCard status="cancelled" />
-              <AppointmentCard status="confirmed" />
-              <AppointmentCard status="pending" />
-              <AppointmentCard status="cancelled" />
+              <AppointmentCard
+                onClickCard={this.onClickOpenCardHandler}
+                status="pending"
+                onClickEditCard={this.onClickOpenEditCardHandler}
+              />
+              <AppointmentCard
+                onClickCard={this.onClickOpenCardHandler}
+                status="cancelled"
+                onClickEditCard={this.onClickOpenEditCardHandler}
+              />
             </section>
           </section>
-          {/* <div className="mobile-menu">
-            <button
-              className="mobile-menu--btn"
-              title="Months Information"
-              aria-label="Months Information"
-              onClick={this.sideDrawerOpenHandler}
-            >
-              <span className="fas fa-bars" alt="as" />
-            </button>
-          </div> */}
         </section>
 
         <aside className="aside-container">
           <section className="aside-container__month-information">
             <MonthsInformation />
+          </section>
+          <section className="aside-container__appointment-detail">
+            <AppointmentDetails
+              appointment={this.state.instanceForAppointmentDetails}
+              open={this.state.openAppointmentDetails}
+              onClickCloseDetails={this.onClickCloseCardHandler}
+              isEditable={this.state.editableContentAppointmentDetails}
+            />
           </section>
         </aside>
       </main>

@@ -1,6 +1,6 @@
 $font-color: #ffffff;
 $border-color: #f0f3f3;
-$upcoming-text-color: #595959;
+$upcoming-text-color: #282943;
 $background-color: #000034;
 
 .homePage {
@@ -16,6 +16,7 @@ $background-color: #000034;
 
 .detail-container {
   width: 100%;
+  z-index: 30;
 
   &__appointments {
     margin-top: -110px;
@@ -64,36 +65,6 @@ $background-color: #000034;
   display: none;
 }
 
-.mobile-menu {
-  background-color: #5acea091;
-  position: fixed;
-  right: 0;
-  top: 80px;
-  border-top-left-radius: 80px;
-  border-bottom-left-radius: 80px;
-  width: 30px;
-  height: 50px;
-  z-index: 10;
-  box-shadow: 0 0 10px 0 #5ace9f;
-
-  &--btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    height: inherit;
-    width: inherit;
-
-    .fa-bars {
-      font-size: 27px;
-      color: #000034;
-      position: absolute;
-      top: 50%;
-      left: 75%;
-      transform: translate(-50%, -50%);
-    }
-  }
-}
-
 @media (min-width: 768px) {
   .detail-container {
     &__appointments {
@@ -123,10 +94,6 @@ $background-color: #000034;
     }
   }
 
-  .mobile-menu {
-    top: 85px;
-  }
-
   .month-information-mobile {
     margin-top: 82px;
     padding-top: 20px;
@@ -142,10 +109,6 @@ $background-color: #000034;
     width: 70%;
   }
 
-  .mobile-menu {
-    display: none;
-  }
-
   .aside-container {
     width: 30%;
     display: flex;
@@ -157,6 +120,13 @@ $background-color: #000034;
       box-sizing: border-box;
       background-color: $background-color;
       margin-top: 82px;
+    }
+
+    &__appointment-detail {
+      position: fixed;
+      width: 30%;
+      margin-top: 267px;
+      box-sizing: border-box;
     }
   }
 }

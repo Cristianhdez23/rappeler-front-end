@@ -4,6 +4,8 @@ import "./AppointmentCard.scss";
 import userImage from "../../assets/user.jpg";
 
 const appointmentCard = props => {
+  let instanceAppointment = props.status;
+
   let statusColorBorder = null,
     statusColorFont = null,
     cancelledStatus = null,
@@ -25,6 +27,14 @@ const appointmentCard = props => {
   return (
     <article
       className={["appointment-card__container", statusColorBorder].join(" ")}
+      role="button"
+      tabIndex="0"
+      onKeyDown={e => {
+        if (e.keyCode === 13) {
+          props.onClickCard(instanceAppointment);
+        }
+      }}
+      onClick={() => props.onClickCard(instanceAppointment)}
     >
       <section className="appointment-card__container__time-block">
         <h5
@@ -87,6 +97,12 @@ const appointmentCard = props => {
           <button
             className="appointment-card__container__buttons-block__btn--btn"
             title="Edit"
+            onKeyDown={e => {
+              if (e.keyCode === 13) {
+                props.onClickCard(instanceAppointment);
+              }
+            }}
+            onClick={e => props.onClickEditCard(e, instanceAppointment)}
           >
             <span className="fas fa-edit" />
           </button>
