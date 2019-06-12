@@ -26,12 +26,12 @@ $cancelled-color: #f16873;
 
     &--left-arrow > .fas,
     &--right-arrow > .fas {
-      color: #595959;
+      color: #282943;
     }
 
     &--month {
       margin: 0 10px 0 10px;
-      color: #595959;
+      color: #282943;
 
       &--year {
         color: #b3b3b3;
@@ -80,7 +80,7 @@ $cancelled-color: #f16873;
       &--information {
         margin: 0;
         font-size: 15px;
-        color: #595959;
+        color: #282943;
 
         &--status {
           color: #b3b3b3;

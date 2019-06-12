@@ -1,0 +1,125 @@
+$confirmed-color: #4870df;
+$pending-color: #e29653;
+$cancelled-color: #f16873;
+
+.appointment-details {
+  background-color: #ffffff;
+  overflow: scroll;
+  overflow-x: hidden;
+  height: 64vh;
+  z-index: 150;
+  transition: transform 0.3s ease-out;
+
+  &__general-information {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+
+    &--title {
+      margin: 20px 0;
+      color: #282943;
+      font-size: 15px;
+    }
+
+    &--status {
+      margin: 15px 0;
+      font-size: 12px;
+      text-transform: capitalize;
+    }
+
+    &--status > .fas {
+      margin-right: 5px;
+    }
+
+    &__users-picture {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+    }
+
+    &__users-picture > img {
+      height: 45px;
+      border-radius: 50%;
+    }
+
+    &__users-picture > .fas {
+      color: #282943;
+      margin: 0 25px;
+      font-size: 25px;
+    }
+
+    &--user-involved-name {
+      margin: 0;
+      color: #282943;
+      font-size: 15px;
+    }
+
+    &--user-involved-phone {
+      margin: 5px 0 15px 0;
+      color: #b3b3b3;
+      font-size: 12px;
+    }
+  }
+}
+
+.appointment-details > .close-button {
+  border: none;
+  background: none;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 25px;
+  color: #b3b3b3;
+  cursor: pointer;
+}
+
+.appointment-details > .close-button:hover {
+  color: #282943;
+}
+
+.open {
+  transform: translateX(0);
+}
+
+.close {
+  transform: translate(-50, -50%);
+}
+
+@media (min-width: 960px) {
+  .appointment-details {
+    box-shadow: -1px 2px 8px -1px #b1bbbe;
+
+    &__general-information {
+      &--title {
+        margin: 15px 0;
+
+        font-size: 18px;
+      }
+    }
+  }
+
+  .appointment-details > .close-button {
+    top: 10px;
+  }
+
+  .close {
+    transform: translateX(100%);
+  }
+}
+
+@media (min-width: 1120px) {
+  .appointment-details > .close-button {
+    top: 10px;
+    right: 15px;
+  }
+}
+
+@media (min-width: 1240px) {
+  .appointment-details > .close-button {
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+  }
+}
