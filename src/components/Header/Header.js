@@ -1,17 +1,32 @@
 import React from "react";
 
-import userImage from "../../assets/user.jpg";
+import Spinner from "../UI/Spinner/Spinner";
+
 import "./Header.scss";
-const header = () => {
+const header = props => {
+  let userData = (
+    <div className="header__user-block">
+      <Spinner />
+    </div>
+  );
+
+  if (props.userInformation) {
+    userData = (
+      <div className="header__user-block">
+        <div className="header__user-block--image">
+          <img src={props.userInformation.avatar} alt="User" />
+        </div>
+        <h6 className="header__user-block--name">
+          {props.userInformation.name}
+        </h6>
+      </div>
+    );
+  }
+
   return (
     <header className="header">
       <h1 className="header--title">Rappeler</h1>
-      <div className="header__user-block">
-        <div className="header__user-block--image">
-          <img src={userImage} alt="User" />
-        </div>
-        <h6 className="header__user-block--name">John Doe</h6>
-      </div>
+      {userData}
     </header>
   );
 };
