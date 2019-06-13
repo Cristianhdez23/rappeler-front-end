@@ -17,7 +17,7 @@ $cancelled-color: #f16873;
     margin: 20px 20px 0 20px;
     padding-bottom: 10px;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     align-content: center;
     justify-content: space-evenly;
     border-bottom: 1px solid #e7ecf4;
@@ -126,7 +126,8 @@ $cancelled-color: #f16873;
         z-index: 30;
       }
 
-      &--btn:hover, &--btn:focus {
+      &--btn:hover,
+      &--btn:focus {
         color: #282943;
       }
 
@@ -225,6 +226,10 @@ $cancelled-color: #f16873;
         width: initial;
         text-align: left;
         margin-left: 10px;
+
+        &--name {
+          width: 150px;
+        }
       }
     }
 
@@ -233,6 +238,7 @@ $cancelled-color: #f16873;
       justify-content: center;
       align-items: flex-start;
       flex-flow: column;
+      width: 100px;
 
       &--date {
         width: initial;
@@ -281,6 +287,7 @@ $cancelled-color: #f16873;
         margin-left: 20px;
         &--name {
           font-size: 17px;
+          width: 200px;
         }
 
         &--location {
@@ -294,6 +301,7 @@ $cancelled-color: #f16873;
     }
 
     &__date-details {
+      width: 135px;
       &--date {
         font-size: 17px;
       }

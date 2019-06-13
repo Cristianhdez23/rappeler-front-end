@@ -1,40 +1,63 @@
 import React from "react";
 
 import "./AppointmentCard.scss";
-import userImage from "../../assets/user.jpg";
+import Spinner from "../UI/Spinner/Spinner";
+
+// Helper Functions
+import {
+  transformTime,
+  findMonth,
+  getDurationAppointment
+} from "../../utils/Functions";
 
 const appointmentCard = props => {
-  let instanceAppointment = props.status;
-
   let statusColorBorder = null,
     statusColorFont = null,
     cancelledStatus = null,
-    isStatusConfirmed = null;
+    isStatusConfirmed = null,
+    startTime = null,
+    startDate = null,
+    title = null,
+    endTime = null;
 
-  if (props.status === "confirmed") {
-    statusColorBorder = "border-left-confirmed";
-    statusColorFont = "status-confirmed";
-    isStatusConfirmed = true;
-  } else if (props.status === "pending") {
-    statusColorBorder = "border-left-pending";
-    statusColorFont = "status-pending";
-  } else if (props.status === "cancelled") {
-    statusColorBorder = "border-left-cancelled";
-    statusColorFont = "status-cancelled";
-    cancelledStatus = "cancelled-color";
+  if (props.appointmentData) {
+    startDate = findMonth(new Date(props.appointmentData.startdate));
+    startTime = transformTime(props.appointmentData.startdate.split(" ")[1]);
+    endTime = getDurationAppointment(
+      props.appointmentData.startdate,
+      props.appointmentData.enddate
+    );
+    title = `${props.appointmentData.first_name} ${
+      props.appointmentData.last_name
+    }`;
+
+    if (props.appointmentData.status === "confirmed") {
+      statusColorBorder = "border-left-confirmed";
+      statusColorFont = "status-confirmed";
+      isStatusConfirmed = true;
+    } else if (props.appointmentData.status === "pending") {
+      statusColorBorder = "border-left-pending";
+      statusColorFont = "status-pending";
+    } else if (props.appointmentData.status === "cancelled") {
+      statusColorBorder = "border-left-cancelled";
+      statusColorFont = "status-cancelled";
+      cancelledStatus = "cancelled-color";
+    }
+  } else {
+    return <Spinner />;
   }
-
   return (
     <article
       className={["appointment-card__container", statusColorBorder].join(" ")}
       role="button"
       tabIndex="0"
+      title="Basic Appointment Information"
       onKeyDown={e => {
         if (e.keyCode === 13) {
-          props.onClickCard(instanceAppointment);
+          props.onClickCard(props.appointmentData);
         }
       }}
-      onClick={() => props.onClickCard(instanceAppointment)}
+      onClick={() => props.onClickCard(props.appointmentData)}
     >
       <section className="appointment-card__container__time-block">
         <h5
@@ -43,15 +66,19 @@ const appointmentCard = props => {
             cancelledStatus
           ].join(" ")}
         >
-          3:30 PM
+          {startTime}
         </h5>
         <h6 className="appointment-card__container__time-block--time-remaining">
-          30 minutes
+          {endTime}
         </h6>
       </section>
       <section className="appointment-card__container__guest-details">
         <div className="appointment-card__container__guest-details__image-block">
-          <img className={cancelledStatus} src={userImage} alt="User" />
+          <img
+            className={cancelledStatus}
+            src={props.appointmentData.avatar}
+            alt="User"
+          />
         </div>
         <div className="appointment-card__container__guest-details__details-block">
           <h5
@@ -60,11 +87,11 @@ const appointmentCard = props => {
               cancelledStatus
             ].join(" ")}
           >
-            PEPITO SANCHEZ
+            {title}
           </h5>
           <h6 className="appointment-card__container__guest-details__details-block--location">
             <span className="fas fa-map-marker-alt" />
-            Inperium Cafe
+            {props.appointmentData.location[0].place}
           </h6>
         </div>
       </section>
@@ -75,7 +102,7 @@ const appointmentCard = props => {
             cancelledStatus
           ].join(" ")}
         >
-          September 10th
+          {startDate}
         </h5>
         <h6
           className={[
@@ -84,7 +111,7 @@ const appointmentCard = props => {
           ].join(" ")}
         >
           <span className="fas fa-circle" />
-          {props.status}
+          {props.appointmentData.status}
         </h6>
       </section>
       <section className="appointment-card__container__buttons-block">
@@ -99,10 +126,10 @@ const appointmentCard = props => {
             title="Edit"
             onKeyDown={e => {
               if (e.keyCode === 13) {
-                props.onClickCard(instanceAppointment);
+                props.onClickCard(props.appointmentData);
               }
             }}
-            onClick={e => props.onClickEditCard(e, instanceAppointment)}
+            onClick={e => props.onClickEditCard(e, props.appointmentData)}
           >
             <span className="fas fa-edit" />
           </button>
