@@ -2,7 +2,9 @@ import * as actionTypes from "./HomePageConstants";
 
 const initialState = {
   userInformation: null,
-  error: false
+  error: false,
+  appointmentsForToday: null,
+  upcomingAppointments: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,6 +13,21 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         userInformation: action.userInformation,
+        error: false
+      };
+    case actionTypes.SET_APPOINTMENT_DATA:
+      return {
+        ...state,
+        appointmentsForToday: action.appointmentsForToday,
+        error: false
+      };
+    case actionTypes.SET_UPCOMING_APPOINTMENT_DATA:
+      const newInformation = state.upcomingAppointments.concat(
+        action.upcomingAppointments
+      );
+      return {
+        ...state,
+        upcomingAppointments: newInformation,
         error: false
       };
     default:
