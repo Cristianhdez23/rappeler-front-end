@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import FilterBar from "../../components/FilterBar/FilterBar";
 import AppointmentCard from "../../components/AppointmentCard/AppointmentCard";
@@ -7,6 +8,8 @@ import SideDrawer from "../../components/UI/SideDrawer/SideDrawer";
 import "./HomePage.scss";
 import MonthsInformation from "../../components/MonthsInformation/MonthsInformation";
 import AppointmentDetails from "../../components/AppointmentDetails/AppointmentDetails";
+
+import * as actions from "./HomePageActions";
 
 class HomePage extends Component {
   state = {
@@ -187,4 +190,15 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomePage);
