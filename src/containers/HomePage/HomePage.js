@@ -1,37 +1,332 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import FilterBar from "../../components/FilterBar/FilterBar";
-import AppointmentCard from "../../components/AppointmentCard/AppointmentCard";
+//Components
+import AppointmentSection from "../AppointmentSection/AppointmentSection";
 import SideDrawer from "../../components/UI/SideDrawer/SideDrawer";
-
-import "./HomePage.scss";
-import MonthsInformation from "../../components/MonthsInformation/MonthsInformation";
+import MonthsInformation from "../MonthsInformation/MonthsInformation";
 import AppointmentDetails from "../../components/AppointmentDetails/AppointmentDetails";
+import CreateAppointmentForm from "../../components/CreateAppointmentForm/CreateAppointmentForm";
+//Actions
+import * as actions from "./HomePageActions";
+//Style
+import "./HomePage.scss";
+//Util
+import {
+  queryDayAfter,
+  calculateDateIn2Days,
+  calculateDateIn1Day,
+  initialStateForm
+} from "../../utils/Functions";
+//import EditAppointment from "../../components/EditAppointment/EditAppointment";
 
 class HomePage extends Component {
   state = {
-    allButtonClicked: true,
-    confirmedButtonClicked: false,
-    pendingButtonClicked: false,
-    cancelledButtonClicked: false,
-
     showSideDrawer: false,
 
     openAppointmentDetails: false,
     instanceForAppointmentDetails: null,
-    editableContentAppointmentDetails: false
+    editableContentAppointmentDetails: false,
+
+    startNumberOfUpcomingData: null,
+    endNumberOfUpcomingData: null,
+    canLoadMoreData: true,
+
+    openCreateAppointment: false,
+
+    orderForm: {
+      friendList: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            {
+              value: {
+                last_name: "Kincade",
+                first_name: "Paxon",
+                phone: "943-237-8503",
+                email: "pkincadedo@aboutads.info",
+                avatar:
+                  "https://robohash.org/facilisoccaecatimolestias.jpg?size=50x50&set=set1"
+              },
+              displayValue: "Paxon Kincade"
+            },
+            {
+              value: {
+                last_name: "Rubinowitsch",
+                first_name: "Tammi",
+                phone: "745-547-0519",
+                email: "trubinowitsch3x@wisc.edu",
+                avatar:
+                  "https://robohash.org/ullamexercitationemsequi.jpg?size=50x50&set=set1"
+              },
+              displayValue: "Tammi Rubinowitsch"
+            }
+          ]
+        },
+        value: {
+          last_name: "Kincade",
+          first_name: "Paxon",
+          phone: "943-237-8503",
+          email: "pkincadedo@aboutads.info",
+          avatar:
+            "https://robohash.org/facilisoccaecatimolestias.jpg?size=50x50&set=set1"
+        },
+        validation: {},
+        label: "Invite a Person",
+        valid: true
+      },
+      startDate: {
+        elementType: "date",
+        elementConfig: {
+          type: "date",
+          placeholder: "Start Date"
+        },
+        value: "",
+        validation: {
+          required: true
+        },
+        label: "Start Date",
+        valid: false,
+        touched: false
+      },
+      startTime: {
+        elementType: "time",
+        elementConfig: {
+          type: "time",
+          placeholder: "Start Time"
+        },
+        value: "",
+        validation: {
+          required: true
+        },
+        label: "Start Time",
+        valid: false,
+        touched: false
+      },
+      endDate: {
+        elementType: "date",
+        elementConfig: {
+          type: "date",
+          placeholder: "End Date"
+        },
+        value: "",
+        validation: {
+          required: true
+        },
+        label: "End Date",
+        valid: false,
+        touched: false
+      },
+      endTime: {
+        elementType: "time",
+        elementConfig: {
+          type: "time",
+          placeholder: "End Time"
+        },
+        value: "",
+        validation: {
+          required: true
+        },
+        label: "End Time",
+        valid: false,
+        touched: false
+      },
+      location: {
+        elementType: "select",
+        elementConfig: {
+          options: [
+            {
+              value: {
+                place: "Valley Edge",
+                street: "2 Garrison Road"
+              },
+              displayValue: "Valley Edge"
+            },
+            {
+              value: {
+                place: "Bartillon",
+                street: "72 Donald Junction"
+              },
+              displayValue: "Bartillon"
+            },
+            {
+              value: {
+                place: "Homewood",
+                street: "04863 Monica Circle"
+              },
+              displayValue: "Homewood"
+            }
+          ]
+        },
+        value: {
+          place: "Valley Edge",
+          street: "2 Garrison Road"
+        },
+        validation: {},
+        label: "Location",
+        valid: true
+      },
+      topics: {
+        elementType: "textarea",
+        elementConfig: {
+          type: "text",
+          placeholder: "Topics"
+        },
+        value: "",
+        validation: {
+          required: true
+        },
+        label: "Topics",
+        valid: false,
+        touched: false
+      }
+    },
+
+    formIsValid: false,
+    loading: false
   };
 
+  componentDidMount() {
+    this.props.onInitFetchAppointmentForTodayData();
+    this.props.onInitFetchUpcomingAppointmentData(
+      this.state.startNumberOfUpcomingData,
+      this.state.endNumberOfUpcomingData
+    );
+
+    this.setState({
+      startNumberOfUpcomingData: calculateDateIn1Day(queryDayAfter),
+      endNumberOfUpcomingData: calculateDateIn2Days(queryDayAfter)
+    });
+  }
+
   componentDidUpdate() {
-    if (
-      !this.state.confirmedButtonClicked &&
-      !this.state.pendingButtonClicked &&
-      !this.state.cancelledButtonClicked &&
-      !this.state.allButtonClicked
-    ) {
-      this.setState({ allButtonClicked: true });
+    if (this.props.createAppointmentSucess) {
+      this.props.onInitFetchAppointmentForTodayData();
+      this.props.onInitFetchUpcomingAppointmentData(null, null);
+      this.setState({
+        startNumberOfUpcomingData: calculateDateIn1Day(queryDayAfter),
+        endNumberOfUpcomingData: calculateDateIn2Days(queryDayAfter)
+      });
+      this.setState({ orderForm: initialStateForm });
+      this.props.onInitFalseStateCreateAppointmentStatus();
+      this.setState({
+        openAppointmentDetails: true,
+        openCreateAppointment: false
+      });
     }
   }
+
+  resetUpcomingDataDate = () => {
+    this.setState({
+      startNumberOfUpcomingData: calculateDateIn1Day(queryDayAfter),
+      endNumberOfUpcomingData: calculateDateIn2Days(queryDayAfter)
+    });
+  };
+
+  createAppointmentHandler = event => {
+    event.preventDefault();
+    // this.setState({ loading: true });
+    const formData = {};
+    for (let formElementIdentifier in this.state.orderForm) {
+      formData[formElementIdentifier] = this.state.orderForm[
+        formElementIdentifier
+      ].value;
+    }
+    let enddate =
+      formData.endDate.split("-")[0] +
+      "/" +
+      formData.endDate.split("-")[1] +
+      "/" +
+      formData.endDate.split("-")[2];
+    let startdate =
+      formData.startDate.split("-")[0] +
+      "/" +
+      formData.startDate.split("-")[1] +
+      "/" +
+      formData.startDate.split("-")[2];
+    let topics = [];
+    formData.topics.split(",").map(x => topics.push({ topic: x }));
+    let userInfo = null;
+    if (typeof formData.friendList === "object") {
+      userInfo = formData.friendList;
+    } else {
+      userInfo = JSON.parse(formData.friendList);
+    }
+
+    let location = null;
+    if (typeof formData.location === "object") {
+      location = formData.location;
+    } else {
+      location = JSON.parse(formData.location);
+    }
+
+    const appointmentInformation = {
+      avatar: userInfo.avatar,
+      email: userInfo.email,
+      enddate: enddate + " " + formData.endTime + ":01",
+      first_name: userInfo.first_name,
+      gender: "Male",
+      last_name: userInfo.last_name,
+      location: [location],
+      phone: userInfo.phone,
+      startdate: startdate + " " + formData.startTime + ":01",
+      status: "pending",
+      topics: topics
+    };
+
+    this.props.onInitCreateAppointment(appointmentInformation);
+  };
+
+  checkValidity(value, rules) {
+    let isValid = true;
+    if (!rules) {
+      return true;
+    }
+
+    if (rules.required) {
+      isValid = value.trim() !== "" && isValid;
+    }
+
+    return isValid;
+  }
+
+  inputChangedHandler = (event, inputIdentifier) => {
+    const updatedOrderForm = {
+      ...this.state.orderForm
+    };
+    const updatedFormElement = {
+      ...updatedOrderForm[inputIdentifier]
+    };
+
+    updatedFormElement.value = event.target.value;
+    updatedFormElement.valid = this.checkValidity(
+      updatedFormElement.value,
+      updatedFormElement.validation
+    );
+    updatedFormElement.touched = true;
+    updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+    let formIsValid = true;
+    for (let inputIdentifier in updatedOrderForm) {
+      formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+    }
+    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
+  };
+
+  loadMoreAppointmentsHandler = event => {
+    event.target.blur();
+    this.props.onInitFetchUpcomingAppointmentData(
+      this.state.startNumberOfUpcomingData,
+      this.state.endNumberOfUpcomingData
+    );
+
+    this.setState({
+      startNumberOfUpcomingData: this.state.endNumberOfUpcomingData,
+      endNumberOfUpcomingData: calculateDateIn2Days(
+        this.state.endNumberOfUpcomingData
+      )
+    });
+  };
 
   sideDrawerCloseHandler = () => {
     this.setState({ showSideDrawer: false });
@@ -43,130 +338,81 @@ class HomePage extends Component {
     });
   };
 
-  // Filter Buttons
-  allButtonClickedHandler = event => {
-    if (this.state.confirmedButtonClicked) {
-      this.setState({ confirmedButtonClicked: false });
-    }
-    if (this.state.pendingButtonClicked) {
-      this.setState({ pendingButtonClicked: false });
-    }
-    if (this.state.cancelledButtonClicked) {
-      this.setState({ cancelledButtonClicked: false });
-    }
-    this.setState({ allButtonClicked: true });
-    event.target.blur();
-  };
-
-  confirmedButtonClickedHandler = event => {
-    if (this.state.allButtonClicked) {
-      this.setState({ allButtonClicked: false });
-    }
-    this.setState({
-      confirmedButtonClicked: !this.state.confirmedButtonClicked
-    });
-    event.target.blur();
-  };
-
-  pendingButtonClickedHandler = event => {
-    if (this.state.allButtonClicked) {
-      this.setState({ allButtonClicked: false });
-    }
-    this.setState({ pendingButtonClicked: !this.state.pendingButtonClicked });
-    event.target.blur();
-  };
-
-  cancelledButtonClickedHandler = event => {
-    if (this.state.allButtonClicked) {
-      this.setState({ allButtonClicked: false });
-    }
-    this.setState({
-      cancelledButtonClicked: !this.state.cancelledButtonClicked
-    });
-    event.target.blur();
-  };
-  // End Filter Buttons
-
-  // onClickEvents Handlers
-
   onClickOpenCardHandler = instanceAppointment => {
-    this.setState({ instanceForAppointmentDetails: instanceAppointment });
-    this.setState({ openAppointmentDetails: true });
-    this.setState({ editableContentAppointmentDetails: false });
+    this.setState({
+      instanceForAppointmentDetails: instanceAppointment,
+      openAppointmentDetails: true,
+      openCreateAppointment: false,
+      editableContentAppointmentDetails: false
+    });
   };
 
-  onClickCloseCardHandler = instanceAppointment => {
-    this.setState({ instanceForAppointmentDetails: null });
-    this.setState({ openAppointmentDetails: false });
+  onClickCloseCardHandler = () => {
+    this.setState({
+      instanceForAppointmentDetails: null,
+      openAppointmentDetails: false,
+      openCreateAppointment: false
+    });
   };
 
   onClickOpenEditCardHandler = (e, instanceAppointment) => {
+    e.preventDefault();
     e.stopPropagation();
-    this.setState({ instanceForAppointmentDetails: instanceAppointment });
-    this.setState({ openAppointmentDetails: true });
-    this.setState({ editableContentAppointmentDetails: true });
+    this.setState({
+      instanceForAppointmentDetails: instanceAppointment,
+      openAppointmentDetails: true,
+      openCreateAppointment: false,
+      editableContentAppointmentDetails: true
+    });
+  };
+
+  onClickOpenCreateAppointmentHandler = e => {
+    e.preventDefault();
+    this.setState({
+      openAppointmentDetails: false,
+      openCreateAppointment: true
+    });
   };
 
   render() {
+    let contentSideDrawerAndDetails = null,
+      openModalOrDetails = null;
+    if (this.state.openCreateAppointment) {
+      contentSideDrawerAndDetails = (
+        <CreateAppointmentForm
+          createAppointmentForm={this.state.orderForm}
+          createAppointmentHandler={this.createAppointmentHandler}
+          inputChangedHandler={this.inputChangedHandler}
+        />
+      );
+    } else if (this.state.openAppointmentDetails) {
+      console.log("Open Details");
+    }
+
+    openModalOrDetails = this.state.openAppointmentDetails
+      ? this.state.openAppointmentDetails
+      : this.state.openCreateAppointment;
+
     return (
       <main className="homePage">
         <SideDrawer
-          open={this.state.openAppointmentDetails}
+          open={openModalOrDetails}
           closed={this.onClickCloseCardHandler}
         >
-          <AppointmentDetails
-            appointment={this.state.instanceForAppointmentDetails}
-            open={this.state.openAppointmentDetails}
-            onClickCloseDetails={this.onClickCloseCardHandler}
-            isEditable={this.state.editableContentAppointmentDetails}
-          />
+          {contentSideDrawerAndDetails}
         </SideDrawer>
         <section className="detail-container">
-          <section className="month-information-mobile">
-            <MonthsInformation />
-          </section>
-          <FilterBar
-            onClickAllButton={this.allButtonClickedHandler}
-            onClickConfirmedButton={this.confirmedButtonClickedHandler}
-            onClickPendingButton={this.pendingButtonClickedHandler}
-            onClickCancelledButton={this.cancelledButtonClickedHandler}
-            allButtonState={this.state.allButtonClicked}
-            confirmedButtonState={this.state.confirmedButtonClicked}
-            pendingButtonState={this.state.pendingButtonClicked}
-            cancelledButtonState={this.state.cancelledButtonClicked}
+          <AppointmentSection
+            appointmentsForToday={this.props.appointmentsForToday}
+            upcomingAppointments={this.props.upcomingAppointments}
+            onClickOpenCardHandler={this.onClickOpenCardHandler}
+            onClickOpenEditCardHandler={this.onClickOpenEditCardHandler}
+            onClickOpenCreateAppointmentHandler={
+              this.onClickOpenCreateAppointmentHandler
+            }
+            loadMoreAppointmentsHandler={this.loadMoreAppointmentsHandler}
+            resetUpcomingData={this.resetUpcomingDataDate}
           />
-          <section className="detail-container__appointments">
-            <section className="detail-container__appointments__today-block">
-              <div className="detail-container__appointments__today-block__information">
-                <h2 className="detail-container__appointments__today-block__information--today-title">
-                  Today
-                </h2>
-                <h5 className="detail-container__appointments__today-block__information--meeting-time">
-                  Meeting in 19 minutes
-                </h5>
-              </div>
-              <AppointmentCard
-                onClickCard={this.onClickOpenCardHandler}
-                status="confirmed"
-                onClickEditCard={this.onClickOpenEditCardHandler}
-              />
-            </section>
-            <section className="detail-container__appointments__upcoming-block">
-              <h2 className="detail-container__appointments__upcoming-block--today-title">
-                Upcoming
-              </h2>
-              <AppointmentCard
-                onClickCard={this.onClickOpenCardHandler}
-                status="pending"
-                onClickEditCard={this.onClickOpenEditCardHandler}
-              />
-              <AppointmentCard
-                onClickCard={this.onClickOpenCardHandler}
-                status="cancelled"
-                onClickEditCard={this.onClickOpenEditCardHandler}
-              />
-            </section>
-          </section>
         </section>
 
         <aside className="aside-container">
@@ -175,11 +421,11 @@ class HomePage extends Component {
           </section>
           <section className="aside-container__appointment-detail">
             <AppointmentDetails
-              appointment={this.state.instanceForAppointmentDetails}
-              open={this.state.openAppointmentDetails}
+              open={openModalOrDetails}
               onClickCloseDetails={this.onClickCloseCardHandler}
-              isEditable={this.state.editableContentAppointmentDetails}
-            />
+            >
+              {contentSideDrawerAndDetails}
+            </AppointmentDetails>
           </section>
         </aside>
       </main>
@@ -187,4 +433,29 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+const mapStateToProps = state => {
+  return {
+    userInformation: state.homePage.userInformation,
+    appointmentsForToday: state.homePage.appointmentsForToday,
+    upcomingAppointments: state.homePage.upcomingAppointments,
+    createAppointmentSucess: state.homePage.createAppointmentSucess
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onInitFetchAppointmentForTodayData: () =>
+      dispatch(actions.initFetchAppointmentsForTodayData()),
+    onInitFetchUpcomingAppointmentData: (start, end) =>
+      dispatch(actions.initFetchUpcomingAppointmentsData(start, end)),
+    onInitCreateAppointment: appointmentData =>
+      dispatch(actions.initCreateAppointment(appointmentData)),
+    onInitFalseStateCreateAppointmentStatus: () =>
+      dispatch(actions.setFalseStateCreateAppointmentStatus())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HomePage);

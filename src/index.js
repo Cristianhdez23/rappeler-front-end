@@ -1,12 +1,47 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import createSagaMiddleware from "redux-saga";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
+import { BrowserRouter } from "react-router-dom";
+
+// Components
 import App from "./App";
-import * as serviceWorker from "./serviceWorker";
+// Reducers
+import HomePageReducer from "./containers/HomePage/HomePageReducer";
+import MonthsInformationReducer from "./containers/MonthsInformation/MonthsInformationReducer";
+import AppointmentSectionReducer from "./containers/AppointmentSection/AppointmentSectionReducer";
+// Sagas
+import { HomePageSaga } from "./containers/HomePage/HomePageSaga";
+import { MonthsInformationSaga } from "./containers/MonthsInformation/MonthsInformationSaga";
+import { AppointmentSectionSaga } from "./containers/AppointmentSection/AppointmentSectionSaga";
+// Style files
+import "./index.css";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const rootReducer = combineReducers({
+  homePage: HomePageReducer,
+  monthsInformation: MonthsInformationReducer,
+  appointmentSection :AppointmentSectionReducer
+});
+
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(sagaMiddleware))
+);
+
+sagaMiddleware.run(HomePageSaga);
+sagaMiddleware.run(MonthsInformationSaga);
+sagaMiddleware.run(AppointmentSectionSaga);
+
+const app = (
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
+);
+
+ReactDOM.render(app, document.getElementById("root"));
