@@ -4,14 +4,31 @@ import AppointmentCard from "../AppointmentCard/AppointmentCard";
 import SectionSpinner from "../UI/Spinner/SectionSpinner/SectionSpinner";
 import "./UpcomingAppointmentsSection.scss";
 
+import { filterAppointments } from "../../utils/Functions";
 class UpcomingAppointmentsSection extends Component {
   render() {
+    let {
+      allButtonClicked,
+      pendingButtonClicked,
+      confirmedButtonClicked,
+      cancelledButtonClicked
+    } = this.props;
     let upcomingAppointments = <SectionSpinner />;
     let dontShowButton = true;
-    
+    let filteredAppointments = null;
+
     if (this.props.appointmentsData.length > 0) {
       dontShowButton = false;
-      upcomingAppointments = this.props.appointmentsData.map(
+      filteredAppointments = this.props.appointmentsData;
+      filteredAppointments = filterAppointments(
+        filteredAppointments,
+        allButtonClicked,
+        confirmedButtonClicked,
+        pendingButtonClicked,
+        cancelledButtonClicked
+      );
+      
+      upcomingAppointments = filteredAppointments.map(
         (appointment, index) => {
           return (
             <AppointmentCard

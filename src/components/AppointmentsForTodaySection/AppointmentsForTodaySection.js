@@ -1,81 +1,64 @@
-import React, { Component } from "react";
+import React from "react";
 
 import AppointmentCard from "../AppointmentCard/AppointmentCard";
 import SectionSpinner from "../UI/Spinner/SectionSpinner/SectionSpinner";
 import "./AppointmentsForTodaySection.scss";
 import NoAppointments from "../UI/NoAppointments/NoAppointments";
 
-import { minutesLeft } from "../../utils/Functions";
+import { filterAppointments } from "../../utils/Functions";
+import MinutesRemainingTitle from "../UI/MinutesRemainingTitle/MinutesRemainingTitle";
 
-class AppointmentsForTodaySection extends Component {
-  state = {
-    seconds: 0
-  };
+const appointmentsForTodaySection = props => {
+  let {
+    allButtonClicked,
+    pendingButtonClicked,
+    confirmedButtonClicked,
+    cancelledButtonClicked
+  } = props;
 
-  tick(date) {
-    let minDiff = minutesLeft(date);
-    this.setState(prevState => ({
-      seconds: minDiff
-    }));
-  }
+  let appointmentsForToday = <SectionSpinner />;
+  let minutesRemaining = null;
+  let filteredAppointments = null;
+  if (props.appointmentsData) {
+    filteredAppointments = props.appointmentsData;
+    filteredAppointments = filterAppointments(
+      filteredAppointments,
+      allButtonClicked,
+      confirmedButtonClicked,
+      pendingButtonClicked,
+      cancelledButtonClicked
+    );
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.appointmentsData !== this.props.appointmentsData) {
-      if (this.props.appointmentsData) {
-        let minDiff = minutesLeft(this.props.appointmentsData[0].startdate);
-        this.setState({ seconds: minDiff });
-        this.interval = setInterval(
-          () => this.tick(this.props.appointmentsData[0].startdate),
-          60000
-        );
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  render() {
-    let appointmentsForToday = <SectionSpinner />;
-    let minutesRemainding = null;
-    if (this.props.appointmentsData) {
-      appointmentsForToday = this.props.appointmentsData.map(
-        (appointment, index) => {
-          return (
-            <AppointmentCard
-              key={index}
-              onClickCard={this.props.onClickCard}
-              appointmentData={appointment}
-              onClickEditCard={this.props.onClickEditCard}
-            />
-          );
-        }
+    appointmentsForToday = filteredAppointments.map((appointment, index) => {
+      return (
+        <AppointmentCard
+          key={index}
+          onClickCard={props.onClickCard}
+          appointmentData={appointment}
+          onClickEditCard={props.onClickEditCard}
+        />
       );
-
-      minutesRemainding = (
-        <h5 className="detail-container__appointments__today-block__information--meeting-time">
-          Meeting in {this.state.seconds} minutes
-        </h5>
-      );
-    }
-
-    if (appointmentsForToday.length === 0) {
-      appointmentsForToday = <NoAppointments />;
-    }
-
-    return (
-      <>
-        <div className="detail-container__appointments__today-block__information">
-          <h2 className="detail-container__appointments__today-block__information--today-title">
-            Today
-          </h2>
-          {minutesRemainding}
-        </div>
-        {appointmentsForToday}
-      </>
+    });
+    minutesRemaining = (
+      <MinutesRemainingTitle appointmentData={filteredAppointments} />
     );
   }
-}
 
-export default AppointmentsForTodaySection;
+  if (appointmentsForToday.length === 0) {
+    appointmentsForToday = <NoAppointments />;
+  }
+
+  return (
+    <>
+      <div className="detail-container__appointments__today-block__information">
+        <h2 className="detail-container__appointments__today-block__information--today-title">
+          Today
+        </h2>
+        {minutesRemaining}
+      </div>
+      {appointmentsForToday}
+    </>
+  );
+};
+
+export default appointmentsForTodaySection;

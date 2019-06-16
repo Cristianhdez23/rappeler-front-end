@@ -7,7 +7,7 @@ const noAppointments = () => {
     <article className="no-appointment-block">
       
       <h5 className="no-appointment-block--text">
-        You don't have appointments today
+        You don't have appointments
       </h5>
     </article>
   );
