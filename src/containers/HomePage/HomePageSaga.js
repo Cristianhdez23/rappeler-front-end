@@ -44,6 +44,8 @@ const initFetchAppointmentsForTodayDataSaga = function* initFetchAppointmentsFor
   try {
     const db = firebase.firestore();
     let appointmentsForToday = [];
+    console.log(queryRealTime);
+    
     yield db
       .collection("appointments2")
       .where("startdate", ">=", queryRealTime)

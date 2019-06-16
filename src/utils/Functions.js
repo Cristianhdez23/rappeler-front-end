@@ -46,6 +46,12 @@ let month = `${
 let hour = `${
   realTimeDateAndTime.getHours() < 10 ? "0" : ""
 }${realTimeDateAndTime.getHours()}`;
+let minutes = `${
+  realTimeDateAndTime.getMinutes() < 10 ? "0" : ""
+}${realTimeDateAndTime.getMinutes()}`;
+let seconds = `${
+  realTimeDateAndTime.getSeconds() < 10 ? "0" : ""
+}${realTimeDateAndTime.getSeconds()}`;
 export const queryRealTime =
   realTimeDateAndTime.getFullYear() +
   "/" +
@@ -55,9 +61,9 @@ export const queryRealTime =
   " " +
   hour +
   ":" +
-  realTimeDateAndTime.getMinutes() +
+  minutes +
   ":" +
-  realTimeDateAndTime.getSeconds();
+  seconds;
 
 let tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
@@ -94,4 +100,45 @@ export const minutesLeft = date => {
   let dateDiff = new Date(date) - realTimeHour;
   minDiff = Math.round(dateDiff / 60000);
   return minDiff;
+};
+
+export const filterAppointments = (
+  appointmentsData,
+  allButtonClicked,
+  confirmedButtonClicked,
+  pendingButtonClicked,
+  cancelledButtonClicked
+) => {
+  let filteredAppointments = appointmentsData;
+  if (
+    allButtonClicked ||
+    (confirmedButtonClicked && pendingButtonClicked && cancelledButtonClicked)
+  ) {
+    filteredAppointments = appointmentsData;
+  } else if (confirmedButtonClicked && pendingButtonClicked) {
+    filteredAppointments = filteredAppointments.filter(
+      x => x.status === "confirmed" || x.status === "pending"
+    );
+  } else if (confirmedButtonClicked && cancelledButtonClicked) {
+    filteredAppointments = filteredAppointments.filter(
+      x => x.status === "confirmed" || x.status === "cancelled"
+    );
+  } else if (pendingButtonClicked && cancelledButtonClicked) {
+    filteredAppointments = filteredAppointments.filter(
+      x => x.status === "pending" || x.status === "cancelled"
+    );
+  } else if (confirmedButtonClicked) {
+    filteredAppointments = filteredAppointments.filter(
+      x => x.status === "confirmed"
+    );
+  } else if (pendingButtonClicked) {
+    filteredAppointments = filteredAppointments.filter(
+      x => x.status === "pending"
+    );
+  } else if (cancelledButtonClicked) {
+    filteredAppointments = filteredAppointments.filter(
+      x => x.status === "cancelled"
+    );
+  }
+  return filteredAppointments;
 };

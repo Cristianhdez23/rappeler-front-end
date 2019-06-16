@@ -185,6 +185,10 @@ class HomePage extends Component {
                 appointmentsData={this.props.appointmentsForToday}
                 onClickCard={this.onClickOpenCardHandler}
                 onClickEditCard={this.onClickOpenEditCardHandler}
+                allButtonClicked={this.state.allButtonClicked}
+                confirmedButtonClicked={this.state.confirmedButtonClicked}
+                pendingButtonClicked={this.state.pendingButtonClicked}
+                cancelledButtonClicked={this.state.cancelledButtonClicked}
               />
             </section>
             <section className="detail-container__appointments__upcoming-block">
@@ -193,6 +197,10 @@ class HomePage extends Component {
                 onClickCard={this.onClickOpenCardHandler}
                 onClickEditCard={this.onClickOpenEditCardHandler}
                 loadMoreAppointments={this.loadMoreAppointmentsHandler}
+                allButtonClicked={this.state.allButtonClicked}
+                confirmedButtonClicked={this.state.confirmedButtonClicked}
+                pendingButtonClicked={this.state.pendingButtonClicked}
+                cancelledButtonClicked={this.state.cancelledButtonClicked}
               />
             </section>
           </section>
