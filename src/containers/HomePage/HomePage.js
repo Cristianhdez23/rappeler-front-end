@@ -6,7 +6,7 @@ import SideDrawer from "../../components/UI/SideDrawer/SideDrawer";
 import AppointmentsForToday from "../../components/AppointmentsForTodaySection/AppointmentsForTodaySection";
 
 import "./HomePage.scss";
-import MonthsInformation from "../../components/MonthsInformation/MonthsInformation";
+import MonthsInformation from "../MonthsInformation/MonthsInformation";
 import AppointmentDetails from "../../components/AppointmentDetails/AppointmentDetails";
 
 import * as actions from "./HomePageActions";
@@ -150,7 +150,7 @@ class HomePage extends Component {
     this.setState({ editableContentAppointmentDetails: true });
   };
 
-  render() {
+  render() {    
     return (
       <main className="homePage">
         <SideDrawer
@@ -167,7 +167,7 @@ class HomePage extends Component {
         </SideDrawer>
         <section className="detail-container">
           <section className="month-information-mobile">
-            <MonthsInformation />
+            <MonthsInformation mobileVersion/>
           </section>
           <FilterBar
             onClickAllButton={this.allButtonClickedHandler}
@@ -208,7 +208,7 @@ class HomePage extends Component {
 
         <aside className="aside-container">
           <section className="aside-container__month-information">
-            <MonthsInformation />
+          <MonthsInformation />
           </section>
           <section className="aside-container__appointment-detail">
             <AppointmentDetails
