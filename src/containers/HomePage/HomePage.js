@@ -2,14 +2,21 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import FilterBar from "../../components/FilterBar/FilterBar";
-import AppointmentCard from "../../components/AppointmentCard/AppointmentCard";
 import SideDrawer from "../../components/UI/SideDrawer/SideDrawer";
+import AppointmentsForToday from "../../components/AppointmentsForTodaySection/AppointmentsForTodaySection";
 
 import "./HomePage.scss";
 import MonthsInformation from "../../components/MonthsInformation/MonthsInformation";
 import AppointmentDetails from "../../components/AppointmentDetails/AppointmentDetails";
 
 import * as actions from "./HomePageActions";
+import UpcomingAppointmentsSection from "../../components/UpcomingAppointmentsSection/UpcomingAppointmentsSection";
+
+import {
+  queryDayAfter,
+  calculateDateIn2Days,
+  calculateDateIn1Day
+} from "../../utils/Functions";
 
 class HomePage extends Component {
   state = {
@@ -22,8 +29,25 @@ class HomePage extends Component {
 
     openAppointmentDetails: false,
     instanceForAppointmentDetails: null,
-    editableContentAppointmentDetails: false
+    editableContentAppointmentDetails: false,
+
+    startNumberOfUpcomingData: null,
+    endNumberOfUpcomingData: null,
+    canLoadMoreData: true
   };
+
+  componentDidMount() {
+    this.props.onInitFetchAppointmentForTodayData();
+    this.props.onInitFetchUpcomingAppointmentData(
+      this.state.startNumberOfUpcomingData,
+      this.state.endNumberOfUpcomingData
+    );
+
+    this.setState({
+      startNumberOfUpcomingData: calculateDateIn1Day(queryDayAfter),
+      endNumberOfUpcomingData: calculateDateIn2Days(queryDayAfter)
+    });
+  }
 
   componentDidUpdate() {
     if (
@@ -35,6 +59,21 @@ class HomePage extends Component {
       this.setState({ allButtonClicked: true });
     }
   }
+
+  loadMoreAppointmentsHandler = event => {
+    event.target.blur();
+    this.props.onInitFetchUpcomingAppointmentData(
+      this.state.startNumberOfUpcomingData,
+      this.state.endNumberOfUpcomingData
+    );
+
+    this.setState({
+      startNumberOfUpcomingData: this.state.endNumberOfUpcomingData,
+      endNumberOfUpcomingData: calculateDateIn2Days(
+        this.state.endNumberOfUpcomingData
+      )
+    });
+  };
 
   sideDrawerCloseHandler = () => {
     this.setState({ showSideDrawer: false });
@@ -93,12 +132,13 @@ class HomePage extends Component {
   // onClickEvents Handlers
 
   onClickOpenCardHandler = instanceAppointment => {
+    console.log(instanceAppointment);
     this.setState({ instanceForAppointmentDetails: instanceAppointment });
     this.setState({ openAppointmentDetails: true });
     this.setState({ editableContentAppointmentDetails: false });
   };
 
-  onClickCloseCardHandler = instanceAppointment => {
+  onClickCloseCardHandler = () => {
     this.setState({ instanceForAppointmentDetails: null });
     this.setState({ openAppointmentDetails: false });
   };
@@ -122,6 +162,7 @@ class HomePage extends Component {
             open={this.state.openAppointmentDetails}
             onClickCloseDetails={this.onClickCloseCardHandler}
             isEditable={this.state.editableContentAppointmentDetails}
+            userAvatar={this.props.userInformation}
           />
         </SideDrawer>
         <section className="detail-container">
@@ -140,33 +181,18 @@ class HomePage extends Component {
           />
           <section className="detail-container__appointments">
             <section className="detail-container__appointments__today-block">
-              <div className="detail-container__appointments__today-block__information">
-                <h2 className="detail-container__appointments__today-block__information--today-title">
-                  Today
-                </h2>
-                <h5 className="detail-container__appointments__today-block__information--meeting-time">
-                  Meeting in 19 minutes
-                </h5>
-              </div>
-              <AppointmentCard
+              <AppointmentsForToday
+                appointmentsData={this.props.appointmentsForToday}
                 onClickCard={this.onClickOpenCardHandler}
-                status="confirmed"
                 onClickEditCard={this.onClickOpenEditCardHandler}
               />
             </section>
             <section className="detail-container__appointments__upcoming-block">
-              <h2 className="detail-container__appointments__upcoming-block--today-title">
-                Upcoming
-              </h2>
-              <AppointmentCard
+              <UpcomingAppointmentsSection
+                appointmentsData={this.props.upcomingAppointments}
                 onClickCard={this.onClickOpenCardHandler}
-                status="pending"
                 onClickEditCard={this.onClickOpenEditCardHandler}
-              />
-              <AppointmentCard
-                onClickCard={this.onClickOpenCardHandler}
-                status="cancelled"
-                onClickEditCard={this.onClickOpenEditCardHandler}
+                loadMoreAppointments={this.loadMoreAppointmentsHandler}
               />
             </section>
           </section>
@@ -182,6 +208,7 @@ class HomePage extends Component {
               open={this.state.openAppointmentDetails}
               onClickCloseDetails={this.onClickCloseCardHandler}
               isEditable={this.state.editableContentAppointmentDetails}
+              userAvatar={this.props.userInformation}
             />
           </section>
         </aside>
@@ -191,11 +218,20 @@ class HomePage extends Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    userInformation: state.homePage.userInformation,
+    appointmentsForToday: state.homePage.appointmentsForToday,
+    upcomingAppointments: state.homePage.upcomingAppointments
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    onInitFetchAppointmentForTodayData: () =>
+      dispatch(actions.initFetchAppointmentsForTodayData()),
+    onInitFetchUpcomingAppointmentData: (start, end) =>
+      dispatch(actions.initFetchUpcomingAppointmentsData(start, end))
+  };
 };
 
 export default connect(

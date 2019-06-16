@@ -1,10 +1,24 @@
 import { put, takeEvery } from "redux-saga/effects";
 
-import { setUserData } from "./HomePageActions";
+import {
+  setUserData,
+  setAppointmentData,
+  setUpcomingAppointmentData
+} from "./HomePageActions";
 
-import { INIT_USER_DATA } from "./HomePageConstants";
+import {
+  INIT_USER_DATA,
+  INIT_FETCH_APPOINTMENT_DATA,
+  INIT_FETCH_UPCOMING_APPOINTMENT_DATA
+} from "./HomePageConstants";
 
 import firebase from "../../utils/FirebaseInstance";
+
+import {
+  queryRealTime,
+  queryDayAfter,
+  calculateDateIn1Day
+} from "../../utils/Functions";
 
 const initUserDataSaga = function* initUserDataSaga(action) {
   try {
@@ -20,10 +34,70 @@ const initUserDataSaga = function* initUserDataSaga(action) {
       });
     yield put(setUserData(userInformation));
   } catch (error) {
-    // yield put(());
+    yield console.log("Error!");
+  }
+};
+
+const initFetchAppointmentsForTodayDataSaga = function* initFetchAppointmentsForTodayDataSaga(
+  action
+) {
+  try {
+    const db = firebase.firestore();
+    let appointmentsForToday = [];
+    yield db
+      .collection("appointments2")
+      .where("startdate", ">=", queryRealTime)
+      .where("startdate", "<", queryDayAfter)
+      .orderBy("startdate", "asc")
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          appointmentsForToday.push(doc.data());
+        });
+      });
+
+    yield put(setAppointmentData(appointmentsForToday));
+  } catch (error) {
+    yield console.log("Error!");
+  }
+};
+
+const initFetchUpcomingAppointmentsDataSaga = function* initFetchUpcomingAppointmentsDataSaga(
+  action
+) {
+  try {
+    const db = firebase.firestore();
+    let upcomingAppointments = [];
+    let startPoint = action.start ? String(action.start) : queryDayAfter;
+    let endPoint = action.end
+      ? String(action.end)
+      : calculateDateIn1Day(queryDayAfter);
+
+    yield db
+      .collection("appointments2")
+      .where("startdate", ">=", startPoint)
+      .where("startdate", "<", endPoint)
+      .orderBy("startdate", "asc")
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          upcomingAppointments.push(doc.data());
+        });
+      });
+    yield put(setUpcomingAppointmentData(upcomingAppointments));
+  } catch (error) {
+    yield console.log("Error!");
   }
 };
 
 export function* HomePageSaga() {
   yield takeEvery(INIT_USER_DATA, initUserDataSaga);
+  yield takeEvery(
+    INIT_FETCH_APPOINTMENT_DATA,
+    initFetchAppointmentsForTodayDataSaga
+  );
+  yield takeEvery(
+    INIT_FETCH_UPCOMING_APPOINTMENT_DATA,
+    initFetchUpcomingAppointmentsDataSaga
+  );
 }

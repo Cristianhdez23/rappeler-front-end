@@ -1,13 +1,15 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/app";
+import "firebase/firestore";
 
 const config = {
-  apiKey: "AIzaSyA3VX_VKEo77UJxyqW4QRa9KWabtuCBBY8",
-  authDomain: "rappeler-front.firebaseapp.com",
-  databaseURL: "https://rappeler-front.firebaseio.com",
-  projectId: "rappeler-front",
-  storageBucket: "rappeler-front.appspot.com",
-  messagingSenderId: "236568895787",
-  appId: "1:236568895787:web:6f0d1440dbf086cf"
+  apiKey: "AIzaSyDsNlcFYSzfJPQTCap4pqP6NgEb4e_1unk",
+  authDomain: "rappeler-back.firebaseapp.com",
+  databaseURL: "https://rappeler-back.firebaseio.com",
+  projectId: "rappeler-back",
+  storageBucket: "rappeler-back.appspot.com",
+  messagingSenderId: "149244580669",
+  appId: "1:149244580669:web:13c047dbd5ca3f57"
 };
 
 firebase.initializeApp(config);
