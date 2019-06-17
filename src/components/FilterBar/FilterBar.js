@@ -24,7 +24,11 @@ const filterBar = props => {
           />
         </div>
         <div className="advanced__filter-bar__buttons-block__add-appointment-button">
-          <button className="advanced__filter-bar__buttons-block__add-appointment-button--btn" title="Add Appointment">
+          <button
+            className="advanced__filter-bar__buttons-block__add-appointment-button--btn"
+            title="Add Appointment"
+            onClick={props.onClickAddAppointment}
+          >
             <span className="fas fa-plus-circle" />
             Add Appointment
           </button>

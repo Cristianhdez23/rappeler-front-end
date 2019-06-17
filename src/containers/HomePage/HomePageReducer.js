@@ -4,7 +4,8 @@ const initialState = {
   userInformation: null,
   error: false,
   appointmentsForToday: null,
-  upcomingAppointments: []
+  upcomingAppointments: [],
+  createAppointmentSucess: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,13 +23,29 @@ const reducer = (state = initialState, action) => {
         error: false
       };
     case actionTypes.SET_UPCOMING_APPOINTMENT_DATA:
-      const newInformation = state.upcomingAppointments.concat(
-        action.upcomingAppointments
-      );
+      let newInformation = null;
+      if (action.stateUpcomingArray === null) {
+        newInformation = action.upcomingAppointments;
+      } else {
+        newInformation = state.upcomingAppointments.concat(
+          action.upcomingAppointments
+        );
+      }
+
       return {
         ...state,
         upcomingAppointments: newInformation,
         error: false
+      };
+    case actionTypes.SET_CREATE_APPOINTMENT_STATUS:
+      return {
+        ...state,
+        createAppointmentSucess: true
+      };
+    case actionTypes.SET_FALSE_STATE_CREATE_APPOINTMENT_STATUS:
+      return {
+        ...state,
+        createAppointmentSucess: false
       };
     default:
       return state;

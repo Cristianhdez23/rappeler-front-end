@@ -1,16 +1,16 @@
 import React from "react";
+import { Route } from "react-router-dom";
 
+// Components
+import HomePage from "./containers/HomePage/HomePage";
 import Layout from "./containers/Layout/Layout";
 
-import "./App.css";
-import HomePage from "./containers/HomePage/HomePage";
-
 function App() {
-  return (
-    <Layout>
-      <HomePage />
-    </Layout>
-  );
+    return (
+        <Layout>
+            <Route path="/" component={HomePage} />
+        </Layout>
+    );
 }
 
 export default App;

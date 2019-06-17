@@ -17,18 +17,7 @@ class MinutesRemainingTitle extends Component {
     if (this.props.appointmentData.length > 0) {
       let minDiff = minutesLeft(this.props.appointmentData[0].startdate);
       this.setState({ minutes: minDiff });
-      this.interval = setInterval(
-        () => this.tick(this.props.appointmentData[0].startdate),
-        60000
-      );
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.appointmentData !== this.props.appointmentData) {
-      if (this.props.appointmentData && this.props.appointmentData.length > 0) {
-        let minDiff = minutesLeft(this.props.appointmentData[0].startdate);
-        this.setState({ minutes: minDiff });
+      if (this.props.appointmentData[0].startdate !== undefined) {
         this.interval = setInterval(
           () => this.tick(this.props.appointmentData[0].startdate),
           60000
@@ -37,9 +26,26 @@ class MinutesRemainingTitle extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.appointmentData !== this.props.appointmentData) {
+      if (this.props.appointmentData && this.props.appointmentData.length > 0) {
+        let minDiff = minutesLeft(this.props.appointmentData[0].startdate);
+        this.setState({ minutes: minDiff });
+
+        if (this.props.appointmentData[0].startdate !== undefined) {
+          this.interval = setInterval(
+            () => this.tick(this.props.appointmentData[0].startdate),
+            60000
+          );
+        }
+      }
+    }
+  }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }
+
   render() {
     if (this.props.appointmentData.length === 0) {
       return <></>;

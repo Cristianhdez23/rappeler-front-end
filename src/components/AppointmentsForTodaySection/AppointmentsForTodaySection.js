@@ -36,6 +36,8 @@ const appointmentsForTodaySection = props => {
           onClickCard={props.onClickCard}
           appointmentData={appointment}
           onClickEditCard={props.onClickEditCard}
+          confirmedAppointment={props.confirmedAppointment}
+          cancelAppointment={props.cancelAppointment}
         />
       );
     });

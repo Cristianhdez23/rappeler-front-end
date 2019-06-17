@@ -1,14 +1,15 @@
 import React from "react";
 
-import "./AppointmentCard.scss";
+// Components
 import Spinner from "../UI/Spinner/Spinner";
-
 // Helper Functions
 import {
   transformTime,
   findMonth,
   getDurationAppointment
 } from "../../utils/Functions";
+// Style files
+import "./AppointmentCard.scss";
 
 const appointmentCard = props => {
   let statusColorBorder = null,
@@ -46,6 +47,7 @@ const appointmentCard = props => {
   } else {
     return <Spinner />;
   }
+
   return (
     <article
       className={["appointment-card__container", statusColorBorder].join(" ")}
@@ -144,6 +146,9 @@ const appointmentCard = props => {
             className="appointment-card__container__buttons-block__btn--btn"
             title="Confirm"
             disabled={cancelledStatus}
+            onClick={event =>
+              props.confirmedAppointment(event, props.appointmentData)
+            }
           >
             <span className="fas fa-check" />
           </button>
@@ -153,6 +158,9 @@ const appointmentCard = props => {
             className="appointment-card__container__buttons-block__btn--btn"
             title="Cancel"
             disabled={cancelledStatus}
+            onClick={event =>
+              props.cancelAppointment(event, props.appointmentData)
+            }
           >
             <span className="fas fa-times" />
           </button>
