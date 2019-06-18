@@ -8,60 +8,8 @@ $cancelled-color: #f16873;
   overflow-x: hidden;
   height: 64vh;
   z-index: 150;
+  overflow: auto;
   transition: transform 0.3s ease-out;
-
-  &__general-information {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: center;
-    overflow: auto;
-
-    &--title {
-      margin: 20px 0;
-      color: #282943;
-      font-size: 15px;
-    }
-
-    &--status {
-      margin: 15px 0;
-      font-size: 12px;
-      text-transform: capitalize;
-    }
-
-    &--status > .fas {
-      margin-right: 5px;
-    }
-
-    &__users-picture {
-      display: flex;
-      align-items: center;
-      margin: 15px 0;
-    }
-
-    &__users-picture > img {
-      height: 45px;
-      border-radius: 50%;
-    }
-
-    &__users-picture > .fas {
-      color: #282943;
-      margin: 0 25px;
-      font-size: 25px;
-    }
-
-    &--user-involved-name {
-      margin: 0;
-      color: #282943;
-      font-size: 15px;
-    }
-
-    &--user-involved-phone {
-      margin: 5px 0 15px 0;
-      color: #b3b3b3;
-      font-size: 12px;
-    }
-  }
 }
 
 .appointment-details > .close-button {
@@ -90,14 +38,6 @@ $cancelled-color: #f16873;
 @media (min-width: 960px) {
   .appointment-details {
     box-shadow: -1px 2px 8px -1px #b1bbbe;
-
-    &__general-information {
-      &--title {
-        margin: 15px 0;
-
-        font-size: 18px;
-      }
-    }
   }
 
   .appointment-details > .close-button {

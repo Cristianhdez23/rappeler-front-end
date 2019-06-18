@@ -7,193 +7,52 @@ import SideDrawer from "../../components/UI/SideDrawer/SideDrawer";
 import MonthsInformation from "../MonthsInformation/MonthsInformation";
 import AppointmentDetails from "../../components/AppointmentDetails/AppointmentDetails";
 import CreateAppointmentForm from "../../components/CreateAppointmentForm/CreateAppointmentForm";
+import EditAppointment from "../../components/EditAppointment/EditAppointment";
 //Actions
 import * as actions from "./HomePageActions";
-//Style
-import "./HomePage.scss";
-//Util
+//Util Function
 import {
-  queryDayAfter,
   calculateDateIn2Days,
   calculateDateIn1Day,
-  initialStateForm
+  formattedEndAndStartData,
+  verifyIfIsObject,
+  updateObject,
+  checkValidity,
+  validateDatesForm
 } from "../../utils/Functions";
-//import EditAppointment from "../../components/EditAppointment/EditAppointment";
-
-import * as actions from "./HomePageActions";
-import UpcomingAppointmentsSection from "../../components/UpcomingAppointmentsSection/UpcomingAppointmentsSection";
-
+//Util Variables
 import {
+  initialCreateAppointmentStateForm,
+  initalEditAppointmentsStateForm,
   queryDayAfter,
-  calculateDateIn2Days,
-  calculateDateIn1Day
-} from "../../utils/Functions";
+  queryRealTime
+} from "../../utils/Variables";
+//Style
+import "./HomePage.scss";
 
 class HomePage extends Component {
   state = {
     showSideDrawer: false,
-
     openAppointmentDetails: false,
     instanceForAppointmentDetails: null,
     editableContentAppointmentDetails: false,
-
     startNumberOfUpcomingData: null,
     endNumberOfUpcomingData: null,
     canLoadMoreData: true,
-
     openCreateAppointment: false,
-
-    orderForm: {
-      friendList: {
-        elementType: "select",
-        elementConfig: {
-          options: [
-            {
-              value: {
-                last_name: "Kincade",
-                first_name: "Paxon",
-                phone: "943-237-8503",
-                email: "pkincadedo@aboutads.info",
-                avatar:
-                  "https://robohash.org/facilisoccaecatimolestias.jpg?size=50x50&set=set1"
-              },
-              displayValue: "Paxon Kincade"
-            },
-            {
-              value: {
-                last_name: "Rubinowitsch",
-                first_name: "Tammi",
-                phone: "745-547-0519",
-                email: "trubinowitsch3x@wisc.edu",
-                avatar:
-                  "https://robohash.org/ullamexercitationemsequi.jpg?size=50x50&set=set1"
-              },
-              displayValue: "Tammi Rubinowitsch"
-            }
-          ]
-        },
-        value: {
-          last_name: "Kincade",
-          first_name: "Paxon",
-          phone: "943-237-8503",
-          email: "pkincadedo@aboutads.info",
-          avatar:
-            "https://robohash.org/facilisoccaecatimolestias.jpg?size=50x50&set=set1"
-        },
-        validation: {},
-        label: "Invite a Person",
-        valid: true
-      },
-      startDate: {
-        elementType: "date",
-        elementConfig: {
-          type: "date",
-          placeholder: "Start Date"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        label: "Start Date",
-        valid: false,
-        touched: false
-      },
-      startTime: {
-        elementType: "time",
-        elementConfig: {
-          type: "time",
-          placeholder: "Start Time"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        label: "Start Time",
-        valid: false,
-        touched: false
-      },
-      endDate: {
-        elementType: "date",
-        elementConfig: {
-          type: "date",
-          placeholder: "End Date"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        label: "End Date",
-        valid: false,
-        touched: false
-      },
-      endTime: {
-        elementType: "time",
-        elementConfig: {
-          type: "time",
-          placeholder: "End Time"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        label: "End Time",
-        valid: false,
-        touched: false
-      },
-      location: {
-        elementType: "select",
-        elementConfig: {
-          options: [
-            {
-              value: {
-                place: "Valley Edge",
-                street: "2 Garrison Road"
-              },
-              displayValue: "Valley Edge"
-            },
-            {
-              value: {
-                place: "Bartillon",
-                street: "72 Donald Junction"
-              },
-              displayValue: "Bartillon"
-            },
-            {
-              value: {
-                place: "Homewood",
-                street: "04863 Monica Circle"
-              },
-              displayValue: "Homewood"
-            }
-          ]
-        },
-        value: {
-          place: "Valley Edge",
-          street: "2 Garrison Road"
-        },
-        validation: {},
-        label: "Location",
-        valid: true
-      },
-      topics: {
-        elementType: "textarea",
-        elementConfig: {
-          type: "text",
-          placeholder: "Topics"
-        },
-        value: "",
-        validation: {
-          required: true
-        },
-        label: "Topics",
-        valid: false,
-        touched: false
-      }
-    },
-
-    formIsValid: false,
-    loading: false
+    createAppointmentForm: null,
+    formIsValid: true,
+    loading: false,
+    editAppointmentForm: null,
+    formEditIsValid: true
   };
+
+  componentWillMount() {
+    this.setState({
+      createAppointmentForm: initialCreateAppointmentStateForm,
+      editAppointmentForm: initalEditAppointmentsStateForm
+    });
+  }
 
   componentDidMount() {
     this.props.onInitFetchAppointmentForTodayData();
@@ -201,7 +60,6 @@ class HomePage extends Component {
       this.state.startNumberOfUpcomingData,
       this.state.endNumberOfUpcomingData
     );
-
     this.setState({
       startNumberOfUpcomingData: calculateDateIn1Day(queryDayAfter),
       endNumberOfUpcomingData: calculateDateIn2Days(queryDayAfter)
@@ -212,14 +70,34 @@ class HomePage extends Component {
     if (this.props.createAppointmentSucess) {
       this.props.onInitFetchAppointmentForTodayData();
       this.props.onInitFetchUpcomingAppointmentData(null, null);
-      this.setState({
-        startNumberOfUpcomingData: calculateDateIn1Day(queryDayAfter),
-        endNumberOfUpcomingData: calculateDateIn2Days(queryDayAfter)
-      });
-      this.setState({ orderForm: initialStateForm });
       this.props.onInitFalseStateCreateAppointmentStatus();
       this.setState({
+        startNumberOfUpcomingData: calculateDateIn1Day(queryDayAfter),
+        endNumberOfUpcomingData: calculateDateIn2Days(queryDayAfter),
+        createAppointmentForm: initialCreateAppointmentStateForm,
+        instanceForAppointmentDetails: this.props.createAppointmentSucess,
         openAppointmentDetails: true,
+        openCreateAppointment: false
+      });
+    }
+
+    if (this.props.updateSuccess) {
+      this.props.onInitFetchAppointmentForTodayData();
+      this.props.onInitFetchUpcomingAppointmentData(null, null);
+      this.props.onInitSetUpdateSuccess(false);
+      this.setState({
+        startNumberOfUpcomingData: calculateDateIn1Day(queryDayAfter),
+        endNumberOfUpcomingData: calculateDateIn2Days(queryDayAfter),
+        instanceForAppointmentDetails: false,
+        openAppointmentDetails: false,
+        openCreateAppointment: false
+      });
+    }
+
+    if (this.props.requestSuccessful) {
+      this.setState({
+        instanceForAppointmentDetails: false,
+        openAppointmentDetails: false,
         openCreateAppointment: false
       });
     }
@@ -234,92 +112,124 @@ class HomePage extends Component {
 
   createAppointmentHandler = event => {
     event.preventDefault();
-    // this.setState({ loading: true });
     const formData = {};
-    for (let formElementIdentifier in this.state.orderForm) {
-      formData[formElementIdentifier] = this.state.orderForm[
+    for (let formElementIdentifier in this.state.createAppointmentForm) {
+      formData[formElementIdentifier] = this.state.createAppointmentForm[
         formElementIdentifier
       ].value;
     }
-    let enddate =
-      formData.endDate.split("-")[0] +
-      "/" +
-      formData.endDate.split("-")[1] +
-      "/" +
-      formData.endDate.split("-")[2];
-    let startdate =
-      formData.startDate.split("-")[0] +
-      "/" +
-      formData.startDate.split("-")[1] +
-      "/" +
-      formData.startDate.split("-")[2];
+    let enddate = formattedEndAndStartData(formData.endDate);
+    let startdate = formattedEndAndStartData(formData.startDate);
     let topics = [];
     formData.topics.split(",").map(x => topics.push({ topic: x }));
-    let userInfo = null;
-    if (typeof formData.friendList === "object") {
-      userInfo = formData.friendList;
-    } else {
-      userInfo = JSON.parse(formData.friendList);
-    }
-
-    let location = null;
-    if (typeof formData.location === "object") {
-      location = formData.location;
-    } else {
-      location = JSON.parse(formData.location);
-    }
+    let userInfo = verifyIfIsObject(formData.friendList);
+    let location = verifyIfIsObject(formData.location);
 
     const appointmentInformation = {
       avatar: userInfo.avatar,
       email: userInfo.email,
-      enddate: enddate + " " + formData.endTime + ":01",
+      enddate: enddate + " " + formData.endTime + ":00",
       first_name: userInfo.first_name,
       gender: "Male",
       last_name: userInfo.last_name,
       location: [location],
       phone: userInfo.phone,
-      startdate: startdate + " " + formData.startTime + ":01",
+      startdate: startdate + " " + formData.startTime + ":00",
+      status: "pending",
+      topics: topics
+    };
+    
+    let formIsValidToUpdate = validateDatesForm(appointmentInformation.startdate,
+      appointmentInformation.enddate,queryRealTime);
+    if (formIsValidToUpdate) {
+      this.setState({ formIsValid: true });
+        this.props.onInitCreateAppointment(appointmentInformation);
+    } else {
+      this.setState({ formEditIsValid: false });
+    }
+  };
+
+  editAppointmentHandler = (event, previousAppointmentData) => {
+    event.preventDefault();
+    const formData = {};
+    for (let formElementIdentifier in this.state.editAppointmentForm) {
+      formData[formElementIdentifier] = this.state.editAppointmentForm[
+        formElementIdentifier
+      ].value;
+    }
+    let enddate = formattedEndAndStartData(formData.endDate);
+    let startdate = formattedEndAndStartData(formData.startDate);
+    let topics = [];
+    formData.topics.split(",").map(x => topics.push({ topic: x }));
+    let location = verifyIfIsObject(formData.location);
+
+    const appointmentInformation = {
+      enddate: enddate + " " + formData.endTime + ":00",
+      location: [location],
+      startdate: startdate + " " + formData.startTime + ":00",
       status: "pending",
       topics: topics
     };
 
-    this.props.onInitCreateAppointment(appointmentInformation);
+    let formIsValidToUpdate = validateDatesForm(appointmentInformation.startdate,
+      appointmentInformation.enddate,queryRealTime);
+    if (formIsValidToUpdate) {
+      this.setState({ formEditIsValid: true });
+      this.props.onInitUpdateAppointmentData(appointmentInformation,
+        previousAppointmentData);
+    } else {
+      this.setState({ formEditIsValid: false });
+    }
   };
 
-  checkValidity(value, rules) {
-    let isValid = true;
-    if (!rules) {
-      return true;
-    }
-
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-
-    return isValid;
-  }
-
-  inputChangedHandler = (event, inputIdentifier) => {
-    const updatedOrderForm = {
-      ...this.state.orderForm
-    };
-    const updatedFormElement = {
-      ...updatedOrderForm[inputIdentifier]
-    };
-
-    updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.validation
+  inputCreateAppointmentChangedHandler = (event, inputIdentifier) => {
+    const updatedFormElement = updateObject(
+      this.state.createAppointmentForm[inputIdentifier],
+      {
+        value: event.target.value,
+        valid: checkValidity(
+          event.target.value,
+          this.state.createAppointmentForm[inputIdentifier].validation
+        ),
+        touched: true
+      }
     );
-    updatedFormElement.touched = true;
-    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    const updatedOrderForm = updateObject(this.state.createAppointmentForm, {
+      [inputIdentifier]: updatedFormElement
+    });
+    this.setState({
+      createAppointmentForm: updatedOrderForm
+    });
+  };
 
-    let formIsValid = true;
-    for (let inputIdentifier in updatedOrderForm) {
-      formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+  inputEditAppointmentChangedHandler = (
+    event,
+    inputIdentifier,
+    posibleValue
+  ) => {
+    let value = null;
+    if (posibleValue) {
+      value = posibleValue;
+    } else {
+      value = event.target.value;
     }
-    this.setState({ orderForm: updatedOrderForm, formIsValid: formIsValid });
+    const updatedFormElement = updateObject(
+      this.state.editAppointmentForm[inputIdentifier],
+      {
+        value: value,
+        valid: checkValidity(
+          value,
+          this.state.editAppointmentForm[inputIdentifier].validation
+        ),
+        touched: true
+      }
+    );
+    const updatedOrderForm = updateObject(this.state.editAppointmentForm, {
+      [inputIdentifier]: updatedFormElement
+    });
+    this.setState({
+      editAppointmentForm: updatedOrderForm
+    });
   };
 
   loadMoreAppointmentsHandler = event => {
@@ -352,7 +262,8 @@ class HomePage extends Component {
       instanceForAppointmentDetails: instanceAppointment,
       openAppointmentDetails: true,
       openCreateAppointment: false,
-      editableContentAppointmentDetails: false
+      editableContentAppointmentDetails: false,
+      formEditIsValid: true
     });
   };
 
@@ -371,7 +282,8 @@ class HomePage extends Component {
       instanceForAppointmentDetails: instanceAppointment,
       openAppointmentDetails: true,
       openCreateAppointment: false,
-      editableContentAppointmentDetails: true
+      editableContentAppointmentDetails: true,
+      formEditIsValid: true
     });
   };
 
@@ -389,13 +301,28 @@ class HomePage extends Component {
     if (this.state.openCreateAppointment) {
       contentSideDrawerAndDetails = (
         <CreateAppointmentForm
-          createAppointmentForm={this.state.orderForm}
+          createAppointmentForm={this.state.createAppointmentForm}
           createAppointmentHandler={this.createAppointmentHandler}
-          inputChangedHandler={this.inputChangedHandler}
+          inputChangedHandler={this.inputCreateAppointmentChangedHandler}
+          formIsValid={this.state.formIsValid}
         />
       );
     } else if (this.state.openAppointmentDetails) {
-      console.log("Open Details");
+      contentSideDrawerAndDetails = (
+        <EditAppointment
+          editAppointmentForm={this.state.editAppointmentForm}
+          editableContentAppointmentDetails={
+            this.state.editableContentAppointmentDetails
+          }
+          instanceForAppointmentDetails={
+            this.state.instanceForAppointmentDetails
+          }
+          inputChangedHandler={this.inputEditAppointmentChangedHandler}
+          userAvatar={this.props.userInformation}
+          editAppointmentHandler={this.editAppointmentHandler}
+          formIsValid={this.state.formEditIsValid}
+        />
+      );
     }
 
     openModalOrDetails = this.state.openAppointmentDetails
@@ -426,12 +353,15 @@ class HomePage extends Component {
 
         <aside className="aside-container">
           <section className="aside-container__month-information">
-          <MonthsInformation />
+            <MonthsInformation />
           </section>
           <section className="aside-container__appointment-detail">
             <AppointmentDetails
               open={openModalOrDetails}
               onClickCloseDetails={this.onClickCloseCardHandler}
+              instanceForAppointmentDetails={
+                this.state.instanceForAppointmentDetails
+              }
             >
               {contentSideDrawerAndDetails}
             </AppointmentDetails>
@@ -447,7 +377,9 @@ const mapStateToProps = state => {
     userInformation: state.homePage.userInformation,
     appointmentsForToday: state.homePage.appointmentsForToday,
     upcomingAppointments: state.homePage.upcomingAppointments,
-    createAppointmentSucess: state.homePage.createAppointmentSucess
+    createAppointmentSucess: state.homePage.createAppointmentSucess,
+    updateSuccess: state.homePage.updateSuccess,
+    requestSuccessful: state.appointmentSection.requestSuccessful
   };
 };
 
@@ -460,7 +392,20 @@ const mapDispatchToProps = dispatch => {
     onInitCreateAppointment: appointmentData =>
       dispatch(actions.initCreateAppointment(appointmentData)),
     onInitFalseStateCreateAppointmentStatus: () =>
-      dispatch(actions.setFalseStateCreateAppointmentStatus())
+      dispatch(actions.setFalseStateCreateAppointmentStatus()),
+    onInitUpdateAppointmentData: (
+      newAppointmentData,
+      previousAppointmentData
+    ) =>
+      dispatch(
+        actions.initUpdateAppointmentData(
+          newAppointmentData,
+          previousAppointmentData
+        )
+      ),
+    onInitSetUpdateSuccess: stateUpdateSuccess => {
+      dispatch(actions.setUpdateSuccess(stateUpdateSuccess));
+    }
   };
 };
 

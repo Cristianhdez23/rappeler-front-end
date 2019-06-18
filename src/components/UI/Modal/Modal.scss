@@ -2,7 +2,7 @@ $cancelled-color: #f16873;
 
 .modal {
   position: fixed;
-  width: 350px;
+  width: 450px;
   max-width: 80%;
   top: 50%;
   right: 50%;
@@ -20,4 +20,51 @@ $cancelled-color: #f16873;
 
 .closeModal {
   transform: translate(150vw, -50%);
+}
+
+.modal-content {
+  &--title {
+    text-align: center;
+    font-size: 18px;
+    color: #282943;
+  }
+
+  &__buttons-block {
+    display: flex;
+    justify-content: center;
+
+    &--btn {
+      margin: 0 10px;
+      text-transform: uppercase;
+      border: 1.5px solid #000034;
+      border-radius: 5px;
+      background: #000034;
+      padding: 7px 30px;
+      color: #ffffff;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    &--btn:hover {
+      border: 1.5px solid #5ace9f;
+      background: #5ace9f;
+    }
+  }
+}
+
+.close-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #bcbcbc;
+  position: absolute;
+  top: 19px;
+  right: 30px;
+}
+
+.close-button:hover {
+  color: #000034;
 }

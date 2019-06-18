@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+//Components
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import Header from "../../components/Header/Header";
+//Actions
 import * as actions from "../HomePage/HomePageActions";
-
+//Style Files
 import "./Layout.scss";
 
 class Layout extends Component {
-  state = {};
-
   componentDidMount() {
     this.props.onInitFetchUserData();
   }

@@ -13,9 +13,9 @@ class UpcomingAppointmentsSection extends Component {
       confirmedButtonClicked,
       cancelledButtonClicked
     } = this.props;
-    let upcomingAppointments = <SectionSpinner />;
-    let dontShowButton = true;
-    let filteredAppointments = null;
+    let upcomingAppointments = <SectionSpinner />,
+      dontShowButton = true,
+      filteredAppointments = null;
 
     if (this.props.appointmentsData.length > 0) {
       dontShowButton = false;

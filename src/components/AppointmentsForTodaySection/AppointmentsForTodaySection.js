@@ -1,12 +1,12 @@
 import React from "react";
 
+// Components
 import AppointmentCard from "../AppointmentCard/AppointmentCard";
 import SectionSpinner from "../UI/Spinner/SectionSpinner/SectionSpinner";
-import "./AppointmentsForTodaySection.scss";
-import NoAppointments from "../UI/NoAppointments/NoAppointments";
-
-import { filterAppointments } from "../../utils/Functions";
 import MinutesRemainingTitle from "../UI/MinutesRemainingTitle/MinutesRemainingTitle";
+import NoAppointments from "../UI/NoAppointments/NoAppointments";
+// Util Functions
+import { filterAppointments } from "../../utils/Functions";
 
 const appointmentsForTodaySection = props => {
   let {

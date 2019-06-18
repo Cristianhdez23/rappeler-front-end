@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-import "./MonthsInformation.scss";
-
+//Actions
 import * as actions from "./MonthsInformationActions";
+//Style Files
+import "./MonthsInformation.scss";
 
 class MonthsInformation extends Component {
   componentWillMount() {
@@ -45,7 +45,7 @@ class MonthsInformation extends Component {
     this.props.onInitSetMonthAndYear(month, year);
   };
 
-  getMonthName = idx => {
+  getMonthName = idMonth => {
     return [
       "January ",
       "February ",
@@ -59,7 +59,7 @@ class MonthsInformation extends Component {
       "October ",
       "November ",
       "December "
-    ][idx];
+    ][idMonth];
   };
 
   render() {

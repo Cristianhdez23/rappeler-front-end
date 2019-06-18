@@ -1,0 +1,37 @@
+.input-block {
+  display: flex;
+  flex-flow: column;
+  margin: 10px 0;
+
+  &--label {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 5px 5px 5px 0;
+    color: #282943;
+  }
+
+  &--time-and--date--input {
+    font-family: "Montserrat", sans-serif;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    border: 1px solid #b1bbbe;
+    color: #282943;
+    background: none;
+    box-shadow: -1px 3px 8px -1px #b1bbbe;
+    cursor: text;
+  }
+
+  &--time-and--date--input:disabled {
+    cursor: default;
+    color: #606566;
+    background: #b1bbbe3a;
+    border-color: #b1bbbe3a;
+  }
+}
+
+.Invalid {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}

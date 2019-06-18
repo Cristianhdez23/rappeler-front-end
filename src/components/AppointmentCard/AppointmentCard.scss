@@ -1,9 +1,13 @@
 $confirmed-color: #4870df;
 $pending-color: #e29653;
 $cancelled-color: #f16873;
+$box-shadow-color: #b1bbbe;
+$time-block-border-color: #e7ecf4;
+$time-remaining-color: #b3b3b3;
+$main-texts-color: #282943;
 
 .appointment-card__container {
-  box-shadow: -1px 10px 8px -1px #b1bbbe;
+  box-shadow: -1px 10px 8px -1px $box-shadow-color;
   border: 1px solid #b1bbbe4f;
   background-color: #ffffff;
   border-radius: 8px;
@@ -20,11 +24,11 @@ $cancelled-color: #f16873;
     align-items: flex-end;
     align-content: center;
     justify-content: space-evenly;
-    border-bottom: 1px solid #e7ecf4;
+    border-bottom: 1px solid $time-block-border-color;
 
     &--appointment-time {
       margin: 0;
-      color: #282943;
+      color: $main-texts-color;
       font-size: 15px;
       width: 50%;
       text-align: center;
@@ -32,7 +36,7 @@ $cancelled-color: #f16873;
 
     &--time-remaining {
       margin: 0;
-      color: #b3b3b3;
+      color: $time-remaining-color;
       width: 50%;
       text-align: center;
     }
@@ -42,7 +46,6 @@ $cancelled-color: #f16873;
     margin-top: 20px;
     display: flex;
     align-items: center;
-    align-content: center;
     justify-content: space-evenly;
 
     &__image-block {
@@ -69,12 +72,12 @@ $cancelled-color: #f16873;
 
       &--name {
         margin: 0;
-        color: #282943;
+        color: $main-texts-color;
       }
 
       &--location {
         margin: 0;
-        color: #b3b3b3;
+        color: $time-remaining-color;
 
         .fa-map-marker-alt {
           margin-right: 5px;
@@ -128,7 +131,7 @@ $cancelled-color: #f16873;
 
       &--btn:hover,
       &--btn:focus {
-        color: #282943;
+        color: $main-texts-color;
       }
 
       &--btn:active {
@@ -148,7 +151,7 @@ $cancelled-color: #f16873;
 .appointment-card__container:hover,
 .appointment-card__container:focus {
   background-color: #f5f5f5;
-  box-shadow: -1px 15px 8px -1px #b1bbbe;
+  box-shadow: -1px 15px 8px -1px $box-shadow-color;
   outline: none;
 }
 
@@ -201,7 +204,7 @@ $cancelled-color: #f16873;
       padding-bottom: 0px;
       border-bottom: none;
       flex-flow: column;
-      border-right: 1.5px solid #e7ecf4;
+      border-right: 1.5px solid $time-block-border-color;
       margin: 20px;
       padding-right: 15px;
 

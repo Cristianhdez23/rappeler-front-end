@@ -1,6 +1,8 @@
 import React from "react";
 
+//Components
 import Backdrop from "../Backdrop/Backdrop";
+//Style Files
 import "./SideDrawer.scss";
 
 const sideDrawer = props => {
@@ -11,7 +13,12 @@ const sideDrawer = props => {
   return (
     <>
       <Backdrop show={props.open} clicked={props.closed} />
-      <div className={attachedClasses.join(" ")}>{props.children}</div>
+      <div className={attachedClasses.join(" ")}>
+        <button className="close-button" title="Close" onClick={props.closed}>
+          <span className="fas fa-times" />
+        </button>
+        {props.children}
+      </div>
     </>
   );
 };

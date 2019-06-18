@@ -5,7 +5,8 @@ const initialState = {
   error: false,
   appointmentsForToday: null,
   upcomingAppointments: [],
-  createAppointmentSucess: false
+  createAppointmentSucess: null,
+  updateSuccess: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,7 +32,6 @@ const reducer = (state = initialState, action) => {
           action.upcomingAppointments
         );
       }
-
       return {
         ...state,
         upcomingAppointments: newInformation,
@@ -40,12 +40,17 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SET_CREATE_APPOINTMENT_STATUS:
       return {
         ...state,
-        createAppointmentSucess: true
+        createAppointmentSucess: action.appointmentInformation
       };
     case actionTypes.SET_FALSE_STATE_CREATE_APPOINTMENT_STATUS:
       return {
         ...state,
-        createAppointmentSucess: false
+        createAppointmentSucess: null
+      };
+    case actionTypes.SET_UPDATE_SUCCESS:
+      return {
+        ...state,
+        updateSuccess: action.stateUpdateSuccess
       };
     default:
       return state;

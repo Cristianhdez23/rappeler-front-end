@@ -107,11 +107,11 @@ class AppointmentSection extends Component {
   };
 
   changeAppointmentStatusToConfirmed = event => {
-    event.stopPropagation();
     this.props.onInitChangeAppointmentStatus(
       this.state.appointmentData,
       "confirmed"
     );
+    event.stopPropagation();
   };
 
   changeAppointmentStatusToCancelled = event => {

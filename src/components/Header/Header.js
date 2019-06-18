@@ -1,8 +1,10 @@
 import React from "react";
 
+//Components
 import Spinner from "../UI/Spinner/Spinner";
-
+//Style Files
 import "./Header.scss";
+
 const header = props => {
   let userData = (
     <div className="header__user-block">
