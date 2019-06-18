@@ -20,6 +20,15 @@ import {
 } from "../../utils/Functions";
 //import EditAppointment from "../../components/EditAppointment/EditAppointment";
 
+import * as actions from "./HomePageActions";
+import UpcomingAppointmentsSection from "../../components/UpcomingAppointmentsSection/UpcomingAppointmentsSection";
+
+import {
+  queryDayAfter,
+  calculateDateIn2Days,
+  calculateDateIn1Day
+} from "../../utils/Functions";
+
 class HomePage extends Component {
   state = {
     showSideDrawer: false,
@@ -417,7 +426,7 @@ class HomePage extends Component {
 
         <aside className="aside-container">
           <section className="aside-container__month-information">
-            <MonthsInformation />
+          <MonthsInformation />
           </section>
           <section className="aside-container__appointment-detail">
             <AppointmentDetails

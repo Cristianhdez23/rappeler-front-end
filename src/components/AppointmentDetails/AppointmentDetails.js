@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
 import "./AppointmentDetails.scss";
-
 class AppointmentDetails extends Component {
   state = {};
 

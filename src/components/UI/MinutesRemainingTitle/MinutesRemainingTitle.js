@@ -45,7 +45,6 @@ class MinutesRemainingTitle extends Component {
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-
   render() {
     if (this.props.appointmentData.length === 0) {
       return <></>;
