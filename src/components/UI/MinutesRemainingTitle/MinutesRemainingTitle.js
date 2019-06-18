@@ -17,10 +17,12 @@ class MinutesRemainingTitle extends Component {
     if (this.props.appointmentData.length > 0) {
       let minDiff = minutesLeft(this.props.appointmentData[0].startdate);
       this.setState({ minutes: minDiff });
-      this.interval = setInterval(
-        () => this.tick(this.props.appointmentData[0].startdate),
-        60000
-      );
+      if (this.props.appointmentData[0].startdate !== undefined) {
+        this.interval = setInterval(
+          () => this.tick(this.props.appointmentData[0].startdate),
+          60000
+        );
+      }
     }
   }
 
@@ -29,10 +31,13 @@ class MinutesRemainingTitle extends Component {
       if (this.props.appointmentData && this.props.appointmentData.length > 0) {
         let minDiff = minutesLeft(this.props.appointmentData[0].startdate);
         this.setState({ minutes: minDiff });
-        this.interval = setInterval(
-          () => this.tick(this.props.appointmentData[0].startdate),
-          60000
-        );
+
+        if (this.props.appointmentData[0].startdate !== undefined) {
+          this.interval = setInterval(
+            () => this.tick(this.props.appointmentData[0].startdate),
+            60000
+          );
+        }
       }
     }
   }

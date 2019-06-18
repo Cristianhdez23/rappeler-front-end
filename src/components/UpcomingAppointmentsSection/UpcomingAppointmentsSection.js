@@ -27,19 +27,19 @@ class UpcomingAppointmentsSection extends Component {
         pendingButtonClicked,
         cancelledButtonClicked
       );
-      
-      upcomingAppointments = filteredAppointments.map(
-        (appointment, index) => {
-          return (
-            <AppointmentCard
-              key={index}
-              onClickCard={this.props.onClickCard}
-              appointmentData={appointment}
-              onClickEditCard={this.props.onClickEditCard}
-            />
-          );
-        }
-      );
+
+      upcomingAppointments = filteredAppointments.map((appointment, index) => {
+        return (
+          <AppointmentCard
+            key={index}
+            onClickCard={this.props.onClickCard}
+            appointmentData={appointment}
+            onClickEditCard={this.props.onClickEditCard}
+            confirmedAppointment={this.props.confirmedAppointment}
+            cancelAppointment={this.props.cancelAppointment}
+          />
+        );
+      });
     }
     return (
       <>
