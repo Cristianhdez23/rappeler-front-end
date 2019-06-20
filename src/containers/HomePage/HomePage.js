@@ -142,10 +142,10 @@ class HomePage extends Component {
     let formIsValidToUpdate = validateDatesForm(appointmentInformation.startdate,
       appointmentInformation.enddate,queryRealTime);
     if (formIsValidToUpdate) {
-      this.setState({ formIsValid: true });
+        this.setState({ formIsValid: true });
         this.props.onInitCreateAppointment(appointmentInformation);
     } else {
-      this.setState({ formEditIsValid: false });
+      this.setState({ formIsValid: false });
     }
   };
 

@@ -125,7 +125,7 @@ class EditAppointmentForm extends Component {
               <span className="fas fa-edit" />
             </button>
           </div>
-          {form}z
+          {form}
         </div>
         <div className="confirm-cancell-btn-block">
           <button
