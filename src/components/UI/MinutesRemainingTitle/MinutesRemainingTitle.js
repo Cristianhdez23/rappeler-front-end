@@ -54,7 +54,7 @@ class MinutesRemainingTitle extends Component {
       return <></>;
     }
     return (
-      <h5 className="detail-container__appointments__today-block__information--meeting-time">
+      <h5 className="detail-container__appointments__today-block__information--meeting-time" role="timer">
         Meeting in {this.state.minutes} minutes
       </h5>
     );

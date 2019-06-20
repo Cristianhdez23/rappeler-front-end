@@ -132,6 +132,7 @@ const appointmentCard = props => {
               }
             }}
             onClick={e => props.onClickEditCard(e, props.appointmentData)}
+            aria-label="Edit"
           >
             <span className="fas fa-edit" />
           </button>
@@ -149,6 +150,7 @@ const appointmentCard = props => {
             onClick={event =>
               props.confirmedAppointment(event, props.appointmentData)
             }
+            aria-label="Confirm"
           >
             <span className="fas fa-check" />
           </button>
@@ -161,6 +163,7 @@ const appointmentCard = props => {
             onClick={event =>
               props.cancelAppointment(event, props.appointmentData)
             }
+            aria-label="Cancel"
           >
             <span className="fas fa-times" />
           </button>

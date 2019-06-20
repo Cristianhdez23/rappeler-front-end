@@ -42,7 +42,7 @@ const createAppointmentForm = props => {
   if (!props.formIsValid) {
     errorMessage = (
       <div className="error-message">
-        <h6 className="error-message--title">Enter a valid date</h6>
+        <h6 className="error-message--title" role="status">Enter a valid date</h6>
       </div>
     );
   }
