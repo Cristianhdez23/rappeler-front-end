@@ -9,7 +9,7 @@ const config = {
   projectId: "rappeler-back",
   storageBucket: "rappeler-back.appspot.com",
   messagingSenderId: "149244580669",
-  appId: "1:149244580669:web:13c047dbd5ca3f57"
+  appId: "1:149244580669:web:832eb982e185228b"
 };
 
 firebase.initializeApp(config);
