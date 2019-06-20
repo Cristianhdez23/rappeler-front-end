@@ -17,6 +17,8 @@ $active-background: rgba(90, 206, 159, 0.2);
     text-align: center;
 
     &--link {
+      border: none;
+      background: none;
       color: $deactivated-color;
       font-size: 25px;
       text-decoration: none;
@@ -42,6 +44,57 @@ $active-background: rgba(90, 206, 159, 0.2);
 
   &__item:active {
     background-color: $active-background;
+  }
+}
+
+.notification-item {
+  position: relative;
+}
+
+.notification {
+  background-color: #ff3546;
+  color: #ffffff;
+  font-weight: 700;
+  position: absolute;
+  top: -1px;
+  right: 25px;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-notification {
+  animation: notification-animation 1.5s ease;
+}
+
+@keyframes notification-animation {
+  0% {
+    transform: rotate(35deg);
+  }
+  12.5% {
+    transform: rotate(-30deg);
+  }
+  25% {
+    transform: rotate(25deg);
+  }
+  37.5% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+  62.5% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }
 
@@ -78,5 +131,10 @@ $active-background: rgba(90, 206, 159, 0.2);
         color: $active-color;
       }
     }
+  }
+
+  .notification {
+    top: 0;
+    right: 0;
   }
 }

@@ -12,7 +12,9 @@ const toolbar = props => {
         <span className="toolbar__logo-block--logo">r</span>
       </div>
       <nav role="navigation">
-        <NavigationItems />
+        <NavigationItems onClickNotificationHandler={props.onClickNotificationHandler}
+          numberOfNotifications={props.numberOfNotifications}
+         />
       </nav>
     </header>
   );

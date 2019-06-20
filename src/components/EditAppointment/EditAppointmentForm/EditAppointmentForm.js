@@ -66,12 +66,6 @@ class EditAppointmentForm extends Component {
     let form = (
       <form
         className="form-edit"
-        onSubmit={event =>
-          this.props.editAppointmentHandler(
-            event,
-            this.props.appointmentInformation
-          )
-        }
       >
         {formElementsArray.map(formElement => (
           <Input
@@ -94,6 +88,12 @@ class EditAppointmentForm extends Component {
         <button
           className={[this.state.editState ? "btn-save-changes" : "btn-hide"]}
           title="Save Changes"
+          onClick={event =>
+            this.props.editAppointmentHandler(
+              event,
+              this.props.appointmentInformation
+            )
+          }
         >
           Save Changes
         </button>

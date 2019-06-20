@@ -1,0 +1,136 @@
+.notification-box {
+  position: fixed;
+  top: 43%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 340px;
+  height: 366px;
+  background: #ffffff;
+  z-index: 90;
+  border-radius: 10px;
+  box-shadow: -1px 10px 8px -1px #b1bbbe;
+
+  &--title {
+    margin: 0;
+    padding: 10px 0;
+    font-weight: 400;
+    text-align: center;
+    background-color: #eeeeee;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 17px;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+
+    overflow: auto;
+    overflow-x: hidden;
+    height: 310px;
+
+    &--item {
+      border-bottom: 1px solid #b1bbbe4f;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &__icon-block {
+        font-size: 25px;
+      }
+
+      &__information-block {
+        margin-left: 15px;
+        &--data {
+          margin: 0;
+          font-weight: 400;
+          font-size: 15px;
+          color: #282943;
+        }
+      }
+    }
+  }
+}
+
+.create-class {
+  color: #155724;
+}
+
+.statusChange-class {
+  color: #004085;
+}
+
+.update-class {
+  color: #856404;
+}
+
+@media (min-width: 768px) {
+  .notification-box {
+    position: fixed;
+    top: 207px;
+    left: 55px;
+    transform: translateX(0);
+    width: 340px;
+    height: 366px;
+    background: #ffffff;
+    z-index: 90;
+    border-radius: 10px;
+    box-shadow: -1px 10px 8px -1px #b1bbbe;
+
+    &--title {
+      margin: 0;
+      padding: 10px 0;
+      font-weight: 400;
+      text-align: center;
+      background-color: #eeeeee;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      font-size: 17px;
+    }
+
+    &__list {
+      margin: 0;
+      padding: 0;
+
+      overflow: auto;
+      overflow-x: hidden;
+      height: 310px;
+
+      &--item {
+        border-bottom: 1px solid #b1bbbe4f;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__icon-block {
+          font-size: 25px;
+        }
+
+        &__information-block {
+          margin-left: 15px;
+          &--data {
+            margin: 0;
+            font-weight: 400;
+            font-size: 15px;
+            color: #282943;
+          }
+        }
+      }
+    }
+  }
+
+  .notification-box::after {
+    content: "";
+    position: absolute;
+    left: -13px;
+    top: 63px;
+    width: 0;
+    height: 0;
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+    border-right: 13px solid #ffffff;
+    clear: both;
+  }
+}

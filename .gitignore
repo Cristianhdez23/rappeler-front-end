@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 #firebaseAPI
-src/utils/FirebaseInstance.js
+src/utils/FirebaseInstance

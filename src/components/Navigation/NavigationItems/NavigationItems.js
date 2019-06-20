@@ -5,6 +5,15 @@ import { Link } from "react-router-dom";
 import "./NavigationItems.scss";
 
 const navigationItems = props => {
+  let notification = null;
+  let animationForNotification = null;
+  if (props.numberOfNotifications > 0) {
+    notification = (
+      <span className="notification">{props.numberOfNotifications}</span>
+    );
+    animationForNotification = "btn-notification";
+  }
+
   return (
     <ul className="navigationItems__list">
       <li className="navigationItems__list__item">
@@ -34,12 +43,16 @@ const navigationItems = props => {
           </h6>
         </div>
       </li>
-      <li className="navigationItems__list__item">
-        <div
+      <li className="navigationItems__list__item notification-item">
+        <button
           tabIndex="0"
-          className="navigationItems__list__item--link"
+          className={[
+            "navigationItems__list__item--link",
+            animationForNotification
+          ].join(" ")}
           title="Notifications"
           aria-labelledby="notifications-navbar"
+          onClick={props.onClickNotificationHandler}
         >
           <span className="fas fa-bell" />
           <h6
@@ -48,7 +61,8 @@ const navigationItems = props => {
           >
             Notifications
           </h6>
-        </div>
+        </button>
+        {notification}
       </li>
       <li className="navigationItems__list__item">
         <div
