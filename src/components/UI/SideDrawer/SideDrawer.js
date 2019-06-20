@@ -13,8 +13,13 @@ const sideDrawer = props => {
   return (
     <>
       <Backdrop show={props.open} clicked={props.closed} />
-      <div className={attachedClasses.join(" ")}>
-        <button className="close-button" title="Close" onClick={props.closed}>
+      <div className={attachedClasses.join(" ")} role="dialog">
+        <button
+          className="close-button"
+          title="Close"
+          onClick={props.closed}
+          aria-label="Close"
+        >
           <span className="fas fa-times" />
         </button>
         {props.children}

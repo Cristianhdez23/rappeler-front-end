@@ -18,6 +18,7 @@ const input = props => {
     case "input":
       inputElement = (
         <input
+          aria-required="true"
           className="input-block--time-and--date--input"
           {...props.elementConfig}
           value={props.value}
@@ -30,6 +31,7 @@ const input = props => {
     case "textarea":
       inputElement = (
         <textarea
+          aria-required="true"
           className="input-block--time-and--date--input"
           {...props.elementConfig}
           value={props.value}
@@ -45,6 +47,7 @@ const input = props => {
     case "select":
       inputElement = (
         <select
+          aria-required="true"
           className="input-block--time-and--date--input"
           value={props.value}
           multiple={false}
@@ -62,6 +65,7 @@ const input = props => {
     case "date":
       inputElement = (
         <input
+          aria-required="true"
           className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
@@ -75,6 +79,7 @@ const input = props => {
     default:
       inputElement = (
         <input
+          aria-required="true"
           className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}

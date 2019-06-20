@@ -15,10 +15,10 @@ const modal = props => {
   if (props.isConfirmed) {
     modalContent = (
       <div className="modal-content">
-        <h4 className="modal-content--title">
+        <h4 className="modal-content--title" if="title-modal">
           Are you sure you want to confirm this appointment?
         </h4>
-        <div className="modal-content__buttons-block">
+        <div className="modal-content__buttons-block" id="description-modal">
           <button
             title="Yes"
             className="modal-content__buttons-block--btn"
@@ -39,10 +39,10 @@ const modal = props => {
   } else if (props.isCancelled) {
     modalContent = (
       <div className="modal-content">
-        <h4 className="modal-content--title">
+        <h4 className="modal-content--title" if="title-modal">
           Are you sure you want to cancel this appointment?
         </h4>
-        <div className="modal-content__buttons-block">
+        <div className="modal-content__buttons-block" id="description-modal">
           <button
             title="Yes"
             className="modal-content__buttons-block--btn"
@@ -65,8 +65,18 @@ const modal = props => {
   return (
     <>
       <Backdrop show={props.open} clicked={props.closed} modal />
-      <div className={attachedClasses.join(" ")}>
-        <button className="close-button" title="Close" onClick={props.closed}>
+      <div
+        className={attachedClasses.join(" ")}
+        role="dialog"
+        aria-labelledby="title-modal"
+        aria-describedby="description-modal"
+      >
+        <button
+          className="close-button"
+          title="Close"
+          onClick={props.closed}
+          aria-label="Close"
+        >
           <span className="fas fa-times" />
         </button>
         {modalContent}

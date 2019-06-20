@@ -134,7 +134,7 @@ class EditAppointment extends Component {
             <span className="fas fa-circle" aria-hidden="true" />
             {this.props.instanceForAppointmentDetails.status}
           </h6>
-          <div className="edit-appointment-information__users-picture">
+          <div className="edit-appointment-information__users-picture" role="img" aria-label="Users profile pictures">
             <img src={this.props.userAvatar.avatar} alt="User" />
             <span className="fas fa-mug-hot" />
             <img

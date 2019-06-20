@@ -102,7 +102,7 @@ class EditAppointmentForm extends Component {
     if (!this.props.formIsValid) {
       errorMessage = (
         <div className="error-message">
-          <h6 className="error-message--title">Enter a valid date</h6>
+          <h6 className="error-message--title" role="status">Enter a valid date</h6>
         </div>
       );
     }
@@ -119,12 +119,13 @@ class EditAppointmentForm extends Component {
                   : "edit-appointment-btn-block--btn",
                 this.state.editState ? "isEditable" : null
               ].join(" ")}
-              title="Enable edition"
+              title="Enable edition" 
+              aria-label="Enable edition"
             >
               <span className="fas fa-edit" />
             </button>
           </div>
-          {form}
+          {form}z
         </div>
         <div className="confirm-cancell-btn-block">
           <button

@@ -32,6 +32,7 @@ class AppointmentDetails extends Component {
           className="close-button"
           title="Close"
           onClick={this.props.onClickCloseDetails}
+          aria-label="Close"
         >
           <span className="fas fa-times" />
         </button>

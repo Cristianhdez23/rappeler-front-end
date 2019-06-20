@@ -12,20 +12,6 @@ $secondary-color: #5ace9f;
     text-align: center;
   }
 
-  .error-message {
-    border-radius: 5px;
-    margin: 0 10px;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-
-    &--title {
-      font-size: 14px;
-      margin: 0;
-      padding: 10px;
-      color: #721c24;
-    }
-  }
-
   .form-create {
     display: flex;
     flex-flow: column;
@@ -49,6 +35,20 @@ $secondary-color: #5ace9f;
       border: 1.5px solid $secondary-color;
       background: $secondary-color;
     }
+  }
+}
+
+.error-message {
+  border-radius: 5px;
+  margin: 0 10px;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+
+  &--title {
+    font-size: 14px;
+    margin: 0;
+    padding: 10px;
+    color: #721c24;
   }
 }
 
