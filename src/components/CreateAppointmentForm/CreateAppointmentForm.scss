@@ -1,0 +1,61 @@
+$main-color: #000034;
+$secondary-color: #5ace9f;
+
+.create-appointment-form {
+  margin: 15px 0;
+  max-height: 430px;
+  overflow: scroll;
+  overflow-x: hidden;
+
+  &--title {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .error-message {
+    border-radius: 5px;
+    margin: 0 10px;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+
+    &--title {
+      font-size: 14px;
+      margin: 0;
+      padding: 10px;
+      color: #721c24;
+    }
+  }
+
+  .form-create {
+    display: flex;
+    flex-flow: column;
+    margin: 0 10px;
+
+    .create-appointment {
+      margin: auto;
+      width: 70%;
+      margin: 10px auto;
+      border: 1.5px solid $main-color;
+      border-radius: 24px;
+      background: $main-color;
+      padding: 10px 15px;
+      color: #ffffff;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .create-appointment:hover {
+      border: 1.5px solid $secondary-color;
+      background: $secondary-color;
+    }
+  }
+}
+
+@media (min-width: 960px) {
+  .create-appointment-form {
+    margin: 50px 15px;
+    max-height: initial;
+    overflow: inherit;
+  }
+}

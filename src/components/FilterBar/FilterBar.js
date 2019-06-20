@@ -1,6 +1,8 @@
 import React from "react";
 
+//Components
 import FilterBtns from "./FilterBtns/FilterBtns";
+//Style Files
 import "./FilterBar.scss";
 
 const filterBar = props => {

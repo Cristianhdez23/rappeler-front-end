@@ -1,0 +1,150 @@
+$confirmed-color: #4870df;
+$border-color: #f0f3f3;
+
+.edit-appointment-form {
+  max-height: 320px;
+  overflow: auto;
+
+  &-block {
+    border-top: 1.5px solid $border-color;
+    border-bottom: 1.5px solid $border-color;
+    padding: 10px 0;
+    margin: 0 15px;
+
+    .edit-appointment-btn-block {
+      display: flex;
+      justify-content: flex-end;
+
+      &--btn {
+        margin-bottom: -16px;
+        font-size: 16px;
+        padding: 0;
+        border: none;
+        border-bottom: 1.5px solid transparent;
+        background: none;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-weight: 700;
+        color: #b3b3b3;
+      }
+
+      &--btn:hover {
+        color: #282943ca;
+        border-bottom: 1.5px solid #282943ca;
+      }
+      &--btn:active {
+        outline: none;
+        color: #282943;
+        border-bottom: 1.5px solid #282943;
+      }
+
+      .isEditable {
+        color: #282943;
+      }
+    }
+
+    .form-edit {
+      display: flex;
+      flex-flow: column;
+
+      .btn-save-changes {
+        width: 60%;
+        margin: 10px auto;
+        border: 1.5px solid #000034;
+        border-radius: 24px;
+        background: #000034;
+        padding: 10px 15px;
+        color: #ffffff;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 14px;
+        font-family: inherit;
+      }
+
+      .btn-save-changes:hover {
+        border: 1.5px solid #5ace9f;
+        background: #5ace9f;
+      }
+    }
+  }
+
+  .confirm-cancell-btn-block {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 15px;
+
+    .cancel-appointment-btn {
+      margin-left: auto;
+      color: #b3b3b3;
+      border: none;
+      border-bottom: 1px solid #b3b3b3;
+    }
+
+    .confirm-appointment-btn {
+      color: $confirmed-color;
+      border: none;
+      border-bottom: 1px solid $confirmed-color;
+      font-weight: 700;
+    }
+
+    .confirm-appointment-btn,
+    .cancel-appointment-btn {
+      cursor: pointer;
+      padding: 0;
+      background: none;
+      font-size: 10.5px;
+      font-family: inherit;
+    }
+
+    .confirm-appointment-btn:hover {
+      color: #4870dfbe;
+      border-bottom: 1px solid #4870dfbe;
+    }
+
+    .cancel-appointment-btn:hover {
+      color: #282943;
+      border-bottom: 1px solid #282943;
+    }
+  }
+}
+
+.btn-hide {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .edit-appointment-form {
+    .confirm-cancell-btn-block {
+      .confirm-appointment-btn,
+      .cancel-appointment-btn {
+        cursor: pointer;
+        font-size: 15px;
+      }
+    }
+  }
+}
+
+@media (min-width: 960px) {
+  .edit-appointment-form {
+    max-height: initial;
+    .confirm-cancell-btn-block {
+      .confirm-appointment-btn,
+      .cancel-appointment-btn {
+        cursor: pointer;
+        font-size: 11px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1100px) {
+  .edit-appointment-form {
+    .confirm-cancell-btn-block {
+      .confirm-appointment-btn,
+      .cancel-appointment-btn {
+        cursor: pointer;
+        font-size: 12.5px;
+      }
+    }
+  }
+}

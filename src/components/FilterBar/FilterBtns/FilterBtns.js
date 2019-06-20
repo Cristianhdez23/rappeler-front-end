@@ -1,5 +1,6 @@
 import React from "react";
 
+//Style Files
 import "./FilterBtns.scss";
 
 const filterBtns = props => {

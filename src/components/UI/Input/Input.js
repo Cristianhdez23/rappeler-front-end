@@ -1,58 +1,55 @@
 import React from "react";
 
-import classes from "./Input.css";
+//Style Files
+import "./Input.scss";
+//Util Functions
+import { formattedDateInput } from "../../../utils/Functions";
 
 const input = props => {
-  let date = new Date();
-  let day = date.getDate();
-  let year = date.getFullYear();
-  let month = `${date.getMonth() < 10 ? "0" : ""}${date.getMonth() + 1}`;
-  let formatDate = year + "-" + month + "-" + day;
+  let formattedDate = formattedDateInput(),
+    inputClasses = ["input-block--time-and--date--input"],
+    inputElement = null;
 
-  let hour = `${date.getHours() < 10 ? "0" : ""}${date.getHours()}`;
-  let minutes = `${date.getMinutes() < 10 ? "0" : ""}${date.getMinutes()}`;
-  let minTime =hour+":"+minutes+":00";
-
-  let inputElement = null;
-  const inputClasses = [classes.InputElement];
-
-  if (props.invalid && props.shouldValidate && props.touched) {
-    inputClasses.push(classes.Invalid);
+  if (!props.formIsValid) {
+    inputClasses.push("Invalid");
   }
 
   switch (props.elementType) {
     case "input":
       inputElement = (
         <input
-          className={inputClasses.join(" ")}
+          className="input-block--time-and--date--input"
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
           required
+          disabled={!props.isEditable}
         />
       );
       break;
     case "textarea":
       inputElement = (
         <textarea
-          className={inputClasses.join(" ")}
+          className="input-block--time-and--date--input"
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
           rows="4"
           cols="30"
+          maxLength="100"
           required
+          disabled={!props.isEditable}
         />
       );
       break;
     case "select":
-
       inputElement = (
         <select
-          className={inputClasses.join(" ")}
+          className="input-block--time-and--date--input"
           value={props.value}
           multiple={false}
           onChange={props.changed}
+          disabled={!props.isEditable}
         >
           {props.elementConfig.options.map((option, index) => (
             <option key={index} value={JSON.stringify(option.value)}>
@@ -68,9 +65,10 @@ const input = props => {
           className={inputClasses.join(" ")}
           {...props.elementConfig}
           value={props.value}
-          min={formatDate}
+          min={formattedDate}
           onChange={props.changed}
           required
+          disabled={!props.isEditable}
         />
       );
       break;
@@ -81,16 +79,16 @@ const input = props => {
           {...props.elementConfig}
           value={props.value}
           onChange={props.changed}
-          min={minTime}
           max="23:59:00"
           required
+          disabled={!props.isEditable}
         />
       );
   }
 
   return (
-    <div className={classes.Input}>
-      <label className={classes.Label}>{props.label}</label>
+    <div className="input-block">
+      <label className="input-block--label">{props.label}</label>
       {inputElement}
     </div>
   );

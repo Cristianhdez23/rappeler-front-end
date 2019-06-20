@@ -1,5 +1,6 @@
 import React from "react";
 
+//Style Files
 import "./Spinner.scss";
 
 const spinner = () => {

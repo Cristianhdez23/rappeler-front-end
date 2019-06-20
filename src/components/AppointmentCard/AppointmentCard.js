@@ -10,6 +10,7 @@ import {
 } from "../../utils/Functions";
 // Style files
 import "./AppointmentCard.scss";
+
 const appointmentCard = props => {
   let statusColorBorder = null,
     statusColorFont = null,

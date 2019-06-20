@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+
+//Util Functions
 import { minutesLeft } from "../../../utils/Functions";
 
 class MinutesRemainingTitle extends Component {
@@ -7,21 +9,24 @@ class MinutesRemainingTitle extends Component {
   };
 
   tick(date) {
-    let minDiff = minutesLeft(date);
-    this.setState(prevState => ({
-      minutes: minDiff
-    }));
+    if (date) {
+      let minDiff = minutesLeft(date);
+      this.setState(prevState => ({
+        minutes: minDiff
+      }));
+    } else {
+      clearInterval(this.interval);
+    }
   }
 
   componentDidMount() {
     if (this.props.appointmentData.length > 0) {
       let minDiff = minutesLeft(this.props.appointmentData[0].startdate);
       this.setState({ minutes: minDiff });
-      if (this.props.appointmentData[0].startdate !== undefined) {
-        this.interval = setInterval(
-          () => this.tick(this.props.appointmentData[0].startdate),
-          60000
-        );
+      clearInterval(this.interval);
+      let date = this.props.appointmentData[0].startdate;
+      if (this.props.appointmentData[0].startdate) {
+        this.interval = setInterval(() => this.tick(date), 60000);
       }
     }
   }
@@ -31,12 +36,10 @@ class MinutesRemainingTitle extends Component {
       if (this.props.appointmentData && this.props.appointmentData.length > 0) {
         let minDiff = minutesLeft(this.props.appointmentData[0].startdate);
         this.setState({ minutes: minDiff });
-
-        if (this.props.appointmentData[0].startdate !== undefined) {
-          this.interval = setInterval(
-            () => this.tick(this.props.appointmentData[0].startdate),
-            60000
-          );
+        clearInterval(this.interval);
+        let date = this.props.appointmentData[0].startdate;
+        if (this.props.appointmentData[0].startdate) {
+          this.interval = setInterval(() => this.tick(date), 60000);
         }
       }
     }
@@ -45,6 +48,7 @@ class MinutesRemainingTitle extends Component {
   componentWillUnmount() {
     clearInterval(this.interval);
   }
+
   render() {
     if (this.props.appointmentData.length === 0) {
       return <></>;

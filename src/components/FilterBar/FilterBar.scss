@@ -20,7 +20,6 @@ $background-btn: #5ace9f;
   }
 
   &__buttons-block {
-    // margin: 0 30px;
     margin: 10px 30px 130px 30px;
     display: flex;
     flex-flow: column;
@@ -52,6 +51,7 @@ $background-btn: #5ace9f;
         cursor: pointer;
         text-decoration: none;
         font-size: 10px;
+        font-family: inherit;
         box-sizing: border-box;
 
         .fa-plus-circle {
@@ -82,7 +82,6 @@ $background-btn: #5ace9f;
       font-size: 15px;
     }
     &__buttons-block {
-      // margin: 0 50px;
       margin: 10px 50px 130px 50px;
       flex-flow: row;
       justify-content: space-between;

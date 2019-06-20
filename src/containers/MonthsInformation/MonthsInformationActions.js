@@ -31,4 +31,4 @@ export const setMonthAndYearForMonthInformation = (month, year) => {
     month: month,
     year: year
   };
-}
+};

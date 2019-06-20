@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
+// Style files
 import "./AppointmentDetails.scss";
-class AppointmentDetails extends Component {
-  state = {};
 
-  componentDidUpdate() {
-    const element = ReactDOM.findDOMNode(this);
-    if (element != null) {
-      element.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+class AppointmentDetails extends Component {
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.instanceForAppointmentDetails !==
+      this.props.instanceForAppointmentDetails
+    ) {
+      const element = ReactDOM.findDOMNode(this);
+      if (element != null) {
+        element.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
     }
   }
 

@@ -1,6 +1,8 @@
 import React from "react";
 
+//Components
 import NavigationItems from "../NavigationItems/NavigationItems";
+//Style Files
 import "./Toolbar.scss";
 
 const toolbar = props => {

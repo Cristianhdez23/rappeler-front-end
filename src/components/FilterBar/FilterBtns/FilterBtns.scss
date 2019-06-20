@@ -25,6 +25,7 @@ $cancelled-color: #f16873;
       width: 90px;
       padding: 5px;
       font-size: 10px;
+      font-family: inherit;
       cursor: pointer;
       border-radius: 24px;
       display: flex;
@@ -111,21 +112,13 @@ $cancelled-color: #f16873;
 
     &__btn-container {
       &--btn {
-        background-color: $background-color;
-        color: $deactivated-color;
-        border: 2px solid $deactivated-color;
         width: 112px;
         padding: 8px 10px;
         font-size: 14px;
-        cursor: pointer;
-        border-radius: 24px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
       }
 
       &--btn > .fas {
-        font-size: 14px;
+        font-size: 13px;
       }
 
       .btn-all {
