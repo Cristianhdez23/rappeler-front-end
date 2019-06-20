@@ -1,0 +1,64 @@
+$text-color: #282943;
+
+.edit-appointment-information {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+
+  &--title {
+    margin: 20px 0;
+    color: $text-color;
+    font-size: 15px;
+  }
+
+  &--status {
+    margin: 15px 0;
+    font-size: 12px;
+    text-transform: capitalize;
+  }
+
+  &--status > .fas {
+    margin-right: 5px;
+  }
+
+  &__users-picture {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+  }
+
+  &__users-picture > img {
+    height: 45px;
+    border-radius: 50%;
+  }
+
+  &__users-picture > .fas {
+    color: $text-color;
+    margin: 0 25px;
+    font-size: 25px;
+  }
+
+  &--user-involved-name {
+    margin: 0;
+    color: $text-color;
+    font-size: 15px;
+  }
+
+  &--user-involved-phone {
+    margin: 5px 0 15px 0;
+    color: #b3b3b3;
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 960px) {
+  .edit-appointment-information {
+    &--title {
+      margin: 15px 0;
+
+      font-size: 18px;
+    }
+  }
+}

@@ -1,0 +1,132 @@
+$font-color: #ffffff;
+$border-color: #f0f3f3;
+$upcoming-text-color: #282943;
+$background-color: #000034;
+
+.homePage {
+  display: flex;
+  margin-bottom: 75px;
+}
+
+.month-information-mobile {
+  margin-top: 75px;
+  padding-bottom: 20px;
+  background-color: $background-color;
+}
+
+.detail-container {
+  width: 100%;
+  z-index: 30;
+
+  &__appointments {
+    margin-top: -110px;
+
+    &__today-block {
+      border-bottom: 1.5px solid #f0f3f3;
+      padding-bottom: 20px;
+      margin: 0 30px;
+
+      &__information {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &--today-title {
+          margin: 0;
+          color: $font-color;
+          font-size: 22px;
+        }
+
+        &--meeting-time {
+          margin: 0;
+          color: $font-color;
+          font-weight: 400;
+          font-style: italic;
+          font-size: 13px;
+        }
+      }
+    }
+
+    &__upcoming-block {
+      border-bottom: 1.5px solid #f0f3f3;
+      padding-bottom: 20px;
+      margin: 50px 30px 0 30px;
+
+      &--today-title {
+        margin: 0;
+        color: $upcoming-text-color;
+        font-size: 22px;
+      }
+    }
+  }
+}
+
+.aside-container {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .detail-container {
+    &__appointments {
+      margin-top: -90px;
+
+      &__today-block {
+        margin: 0 50px;
+
+        &__information {
+          &--today-title {
+            font-size: 25px;
+          }
+
+          &--meeting-time {
+            font-size: 15px;
+          }
+        }
+      }
+
+      &__upcoming-block {
+        margin: 50px 50px 0 50px;
+
+        &--today-title {
+          font-size: 25px;
+        }
+      }
+    }
+  }
+
+  .month-information-mobile {
+    margin-top: 82px;
+    padding-top: 20px;
+  }
+}
+
+@media (min-width: 960px) {
+  .month-information-mobile {
+    display: none;
+  }
+
+  .detail-container {
+    width: 70%;
+  }
+
+  .aside-container {
+    width: 30%;
+    display: flex;
+    flex-flow: column;
+
+    &__month-information {
+      position: fixed;
+      width: 30%;
+      box-sizing: border-box;
+      background-color: $background-color;
+      margin-top: 82px;
+    }
+
+    &__appointment-detail {
+      position: fixed;
+      width: 30%;
+      margin-top: 267px;
+      box-sizing: border-box;
+    }
+  }
+}

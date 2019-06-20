@@ -1,0 +1,27 @@
+.sideDrawer {
+  position: fixed;
+  width: 550px;
+  max-width: 80%;
+  top: 50%;
+  right: 50%;
+  z-index: 200;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 25px 16px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease-out;
+}
+
+.openSideDrawer {
+  transform: translate(50%, -50%);
+}
+
+.closeSideDrawer {
+  transform: translate(150vw, -50%);
+}
+
+@media (min-width: 960px) {
+  .sideDrawer {
+    display: none;
+  }
+}

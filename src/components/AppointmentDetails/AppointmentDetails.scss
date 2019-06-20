@@ -1,0 +1,65 @@
+$confirmed-color: #4870df;
+$pending-color: #e29653;
+$cancelled-color: #f16873;
+
+.appointment-details {
+  background-color: #ffffff;
+  overflow: scroll;
+  overflow-x: hidden;
+  height: 64vh;
+  z-index: 150;
+  overflow: auto;
+  transition: transform 0.3s ease-out;
+}
+
+.appointment-details > .close-button {
+  border: none;
+  background: none;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 25px;
+  color: #b3b3b3;
+  cursor: pointer;
+}
+
+.appointment-details > .close-button:hover {
+  color: #282943;
+}
+
+.open {
+  transform: translateX(0);
+}
+
+.close {
+  transform: translate(-50, -50%);
+}
+
+@media (min-width: 960px) {
+  .appointment-details {
+    box-shadow: -1px 2px 8px -1px #b1bbbe;
+  }
+
+  .appointment-details > .close-button {
+    top: 10px;
+  }
+
+  .close {
+    transform: translateX(100%);
+  }
+}
+
+@media (min-width: 1120px) {
+  .appointment-details > .close-button {
+    top: 10px;
+    right: 15px;
+  }
+}
+
+@media (min-width: 1240px) {
+  .appointment-details > .close-button {
+    top: 10px;
+    right: 20px;
+    font-size: 30px;
+  }
+}

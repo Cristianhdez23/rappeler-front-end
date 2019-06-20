@@ -1,0 +1,138 @@
+$background-color: #000034;
+$hover-effect-btn: #5ace9f;
+$font-color: #ffffff;
+$deactivated-color: #45456c;
+$confirmed-color: #4870df;
+$pending-color: #e29653;
+$cancelled-color: #f16873;
+
+.btn-filter-block {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  &__btn-container {
+    width: 48%;
+    display: flex;
+    justify-content: center;
+    margin: 5px 0;
+
+    &--btn {
+      background-color: $background-color;
+      color: $deactivated-color;
+      border: 2px solid $deactivated-color;
+      width: 90px;
+      padding: 5px;
+      font-size: 10px;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &--btn > .fas {
+      font-size: 10px;
+      margin-left: 6px;
+    }
+
+    .active-all {
+      border: 2px solid $font-color;
+      color: $font-color;
+    }
+
+    &--btn:hover,
+    &--btn:focus {
+      color: $hover-effect-btn;
+      border: 2px solid $hover-effect-btn;
+    }
+
+    &--btn:active {
+      background-color: #ffffff32;
+      border: 2px solid $font-color;
+      color: $font-color;
+      outline: none;
+    }
+
+    .btn-confirmed:hover,
+    .btn-confirmed:focus,
+    .active-confirmed {
+      color: $confirmed-color;
+      border: 2px solid $confirmed-color;
+    }
+
+    .btn-confirmed:active {
+      background-color: #4870df2f;
+      outline: none;
+    }
+
+    .btn-pending:hover,
+    .btn-pending:focus,
+    .active-pending {
+      color: $pending-color;
+      border: 2px solid $pending-color;
+    }
+
+    .btn-pending:active {
+      background-color: #e296532f;
+      outline: none;
+    }
+
+    .btn-cancelled:hover,
+    .btn-cancelled:focus,
+    .active-cancelled {
+      color: $cancelled-color;
+      border: 2px solid $cancelled-color;
+    }
+
+    .btn-cancelled:active {
+      background-color: #f1687431;
+      outline: none;
+    }
+
+    .icon-confirmed {
+      color: $confirmed-color;
+    }
+
+    .icon-pending {
+      color: $pending-color;
+    }
+
+    .icon-cancelled {
+      color: $cancelled-color;
+    }
+  }
+}
+
+@media (min-width: 1240px) {
+  .btn-filter-block {
+    flex-wrap: nowrap;
+
+    &__btn-container {
+      &--btn {
+        width: 112px;
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+
+      &--btn > .fas {
+        font-size: 13px;
+      }
+
+      .btn-all {
+        margin-right: 10px;
+      }
+
+      .btn-confirmed,
+      .btn-pending {
+        margin-right: 8px;
+      }
+
+      .btn-cancelled {
+        margin-right: 15px;
+      }
+    }
+  }
+}
