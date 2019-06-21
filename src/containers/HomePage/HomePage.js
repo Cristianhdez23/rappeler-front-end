@@ -30,6 +30,8 @@ import {
 //Style
 import "./HomePage.scss";
 
+import firebase from "../../utils/FirebaseInstance";
+
 class HomePage extends Component {
   state = {
     showSideDrawer: false,
@@ -44,7 +46,8 @@ class HomePage extends Component {
     formIsValid: true,
     loading: false,
     editAppointmentForm: null,
-    formEditIsValid: true
+    formEditIsValid: true,
+    db: firebase.firestore()
   };
 
   componentWillMount() {
@@ -94,7 +97,7 @@ class HomePage extends Component {
       });
     }
 
-    if (this.props.requestSuccessful) {
+    if (this.props.requestChangeStatusSuccessful) {
       this.setState({
         instanceForAppointmentDetails: false,
         openAppointmentDetails: false,
@@ -112,6 +115,7 @@ class HomePage extends Component {
 
   createAppointmentHandler = event => {
     event.preventDefault();
+    event.stopPropagation();
     const formData = {};
     for (let formElementIdentifier in this.state.createAppointmentForm) {
       formData[formElementIdentifier] = this.state.createAppointmentForm[
@@ -138,12 +142,15 @@ class HomePage extends Component {
       status: "pending",
       topics: topics
     };
-    
-    let formIsValidToUpdate = validateDatesForm(appointmentInformation.startdate,
-      appointmentInformation.enddate,queryRealTime);
+
+    let formIsValidToUpdate = validateDatesForm(
+      appointmentInformation.startdate,
+      appointmentInformation.enddate,
+      queryRealTime
+    );
     if (formIsValidToUpdate) {
-        this.setState({ formIsValid: true });
-        this.props.onInitCreateAppointment(appointmentInformation);
+      this.setState({ formIsValid: true });
+      this.props.onInitCreateAppointment(appointmentInformation);
     } else {
       this.setState({ formIsValid: false });
     }
@@ -151,6 +158,7 @@ class HomePage extends Component {
 
   editAppointmentHandler = (event, previousAppointmentData) => {
     event.preventDefault();
+    event.stopPropagation();
     const formData = {};
     for (let formElementIdentifier in this.state.editAppointmentForm) {
       formData[formElementIdentifier] = this.state.editAppointmentForm[
@@ -171,12 +179,17 @@ class HomePage extends Component {
       topics: topics
     };
 
-    let formIsValidToUpdate = validateDatesForm(appointmentInformation.startdate,
-      appointmentInformation.enddate,queryRealTime);
+    let formIsValidToUpdate = validateDatesForm(
+      appointmentInformation.startdate,
+      appointmentInformation.enddate,
+      queryRealTime
+    );
     if (formIsValidToUpdate) {
       this.setState({ formEditIsValid: true });
-      this.props.onInitUpdateAppointmentData(appointmentInformation,
-        previousAppointmentData);
+      this.props.onInitUpdateAppointmentData(
+        appointmentInformation,
+        previousAppointmentData
+      );
     } else {
       this.setState({ formEditIsValid: false });
     }
@@ -379,7 +392,7 @@ const mapStateToProps = state => {
     upcomingAppointments: state.homePage.upcomingAppointments,
     createAppointmentSucess: state.homePage.createAppointmentSucess,
     updateSuccess: state.homePage.updateSuccess,
-    requestSuccessful: state.appointmentSection.requestSuccessful
+    requestChangeStatusSuccessful: state.appointmentSection.requestSuccessful
   };
 };
 

@@ -30,7 +30,7 @@ const appointmentCard = props => {
     );
     title = `${props.appointmentData.first_name} ${
       props.appointmentData.last_name
-    }`;
+      }`;
 
     if (props.appointmentData.status === "confirmed") {
       statusColorBorder = "border-left-confirmed";
